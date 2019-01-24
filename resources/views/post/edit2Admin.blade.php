@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appadmin')
 
 @section('content')
 	<div class="container">
@@ -8,7 +8,7 @@
 		        	class="panel-heading">Edit Member
 		        </div>
 		        <div class="panel-body">
-		            <form class="" action="{{ route('post.update2', $post) }}" method="post">
+		            <form class="" action="{{ route('post.update2.admin', $post) }}" method="post">
 						{{ csrf_field() }}
 						{{ method_field('PATCH') }}
 						<div class="form-group">

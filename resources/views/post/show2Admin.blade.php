@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appadmin')
 
 @section('content')
 	<div class="container">
@@ -9,14 +9,14 @@
 		                Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ $post->name }}
 
 		                <div class="pull-right">
-	                		<form class="" action="{{ route('post.edit2', $post) }}">
+	                		<form class="" action="{{ route('post.edit2.admin', $post) }}">
 	                			{{ csrf_field() }}
 	                			{{ method_field('UPDATE') }}
 	                			<button type="submit" class="btn btn-xs btn-info">&nbsp;&nbsp;Edit&nbsp;&nbsp;</button>	
 	                		</form>
 	                	</div>
 	                	<div class="pull-right">
-	                		<form class="" action="{{ route('post.destroy2', $post) }}" method="post">
+	                		<form class="" action="{{ route('post.destroy2.admin', $post) }}" method="post">
 	                			{{ csrf_field() }}
 	                			{{ method_field('DELETE') }}
 	                			<button type="submit" class="btn btn-xs btn-danger">Hapus</button> &nbsp;

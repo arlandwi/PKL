@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appadmin')
 
 @section('content')
 	<section class="about" id="about">
@@ -15,13 +15,11 @@
 	        <div class="col-md-8 col-md-offset-2">
 
 	            @foreach ($posts as $post)
-                @if( $post->status === 'member' )
   	            	<div class="panel panel-default">
   		                <div class="panel-heading">
-  		                	<a href="{{ route('post.show2', $post) }}">{{ $post->name }}</a>
+  		                	<a href="{{ route('post.show2.admin', $post) }}">{{ $post->name }}</a>
   		                </div>
-  	            	</div>
-                @endif  
+  	            	</div>  
 	            @endforeach
 
 	            {!! $posts->render() !!}

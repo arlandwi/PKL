@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-	protected $fillable = [
+    protected $fillable = [
 		'post_id',
 		'user_id',
+		'admin_id',
 		'message',
 	];
 
@@ -22,4 +23,10 @@ class Comment extends Model
     	return $this->belongsTo(User::class);
     }
 
+     public function admin()
+    {
+    	return $this->belongsTo(Admin::class);
+    }
+
 }
+

@@ -17,7 +17,7 @@
 	            @foreach ($posts as $post)
 	            	<!-- <div class="panel panel-default"> -->
 		                <!-- <div class="panel-heading"> -->
-		                	<!-- <a href="{{ route('post.show', $post) }}">{{ $post->title }} </a> | {{ $post->category->name }} -->
+		                	<!-- <a href="">{{ $post->title }} </a> | {{ $post->category->name }} -->
 
 		                	<!-- <div class="pull-right"> -->
 		                		<!-- <form class="" action="#"> -->

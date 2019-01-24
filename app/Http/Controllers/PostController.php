@@ -12,12 +12,20 @@ use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
     
-	public function index()
+	public function indexAdmin()
 	{
 		$posts = Post::latest()->paginate(3);
 
-		return view('post.index', compact('posts'));
+		return view('post.indexAdmin', compact('posts'));
 	}
+
+    public function indexUser()
+    {
+        $posts = Post::latest()->paginate(3);
+
+        return view('post.indexUser', compact('posts'));
+    }
+
     public function showtask()
     {
         $tasks = Task::latest()->paginate(3);
@@ -34,34 +42,46 @@ class PostController extends Controller
 
 		return view('post.notification', compact('posts'));
 	}
-    public function member(){
+    public function memberAdmin(){
         $posts = User::latest()->paginate(3);
 
-        return view('post.member', compact('posts'));
+        return view('post.memberAdmin', compact('posts'));
     }
 	public function portfolio(){
 		$posts = Post::latest()->paginate(3);
 		return view('post.portfolio', compact('posts'));
 	}
-    public function profil(){
+    public function profilAdmin(){
         $ulog = Auth::user();
-        return view('post.profil', compact('ulog'));
+        return view('post.profilAdmin', compact('ulog'));
     }
 
-    public function updatepro(Request $request){
-      $updatee = \DB::table('users')->select('id')->where('id', $request->input('id'));
+    public function profilUser(){
+        $ulog = Auth::user();
+        return view('post.profilUser', compact('ulog'));
+    }
+
+    public function updateproAdmin(Request $request){
+      $updatee = \DB::table('admins')->select('id')->where('id', $request->input('id'));
       $updatee->update(['name' => $request->input('name')]);
       $updatee->update(['email' => $request->input('email')]);
       return back()->with('success', 'Profil Berhasil Diubah');
     }
 
-    public function create()
-    {
-    	$categories = Category::all();
-    	return view('post.create', compact('categories'));
+     public function updateproUser(Request $request){
+      $updatee = \DB::table('admins')->select('id')->where('id', $request->input('id'));
+      $updatee->update(['name' => $request->input('name')]);
+      $updatee->update(['email' => $request->input('email')]);
+      return back()->with('success', 'Profil Berhasil Diubah');
     }
 
-    public function store()
+    public function createAdmin()
+    {
+    	$categories = Category::all();
+    	return view('post.createAdmin', compact('categories'));
+    }
+
+    public function storeAdmin()
     {
     	$this->validate(request(), [
     		'title' => 'required',
@@ -75,10 +95,10 @@ class PostController extends Controller
     		'category_id' => request('category_id')
     	]);
 
-    	return redirect() -> route('post.index')->with('success', 'Post Berhasil Ditambahkan');
+    	return redirect() -> route('post.index.admin')->with('success', 'Post Berhasil Ditambahkan');
     }
 
-    public function taskstore()
+    public function taskstoreAdmin()
     {
         $this->validate(request(), [
             'judul_task' => 'required',
@@ -96,30 +116,35 @@ class PostController extends Controller
         return redirect() -> route('post.showtask')->with('success', 'Task Berhasil Ditambahkan');
     }
 
-    public function show(Post $post)
+    public function showAdmin(Post $post)
     {
-    	return view('post.show', compact('post'));
+    	return view('post.showAdmin', compact('post'));
     }
 
-    public function show2(User $post)
+     public function showUser(Post $post)
     {
-        return view('post.show2', compact('post'));
+        return view('post.showUser', compact('post'));
     }
 
-    public function task(Post $post)
+    public function show2Admin(User $post)
+    {
+        return view('post.show2Admin', compact('post'));
+    }
+
+    public function taskAdmin(Post $post)
     {
         $users = User::all();
-        return view('post.task', compact('users', 'post'));
+        return view('post.taskAdmin', compact('users', 'post'));
     }
 
-    public function edit(Post $post)
+    public function editAdmin(Post $post)
     {
     	$categories = Category::all();
 
-    	return view('post.edit', compact('post', 'categories'));
+    	return view('post.editAdmin', compact('post', 'categories'));
     }
 
-    public function update(Post $post)
+    public function updateAdmin(Post $post)
     {
     	$post->update([
     		'title' => request('title'),
@@ -127,23 +152,23 @@ class PostController extends Controller
     		'content' => request ('content'),
     	]);
 
-    	return redirect()->route('post.index')->with('info', 'Post Berhasil Diubah');
+    	return redirect()->route('post.index.admin')->with('info', 'Post Berhasil Diubah');
     }
 
-    public function edit2(User $post)
+    public function edit2Admin(User $post)
     {
 
-        return view('post.edit2', compact('post'));
+        return view('post.edit2Admin', compact('post'));
     }
 
-    public function update2(User $post)
+    public function update2Admin(User $post)
     {
         $post->update([
             'name' => request('name'),
             'email' => request('email'),
         ]);
 
-        return redirect()->route('post.member')->with('info', 'Post Berhasil Diubah');
+        return redirect()->route('post.member.admin')->with('info', 'Post Berhasil Diubah');
     }
 
     public function edit3(User $post)
@@ -152,26 +177,16 @@ class PostController extends Controller
         return view('post.edit3', compact('post'));
     }
 
-    public function update3(User $post)
-    {
-        $post->update([
-            'name' => request('name'),
-            'email' => request('email'),
-        ]);
-
-        return redirect()->route('post.member')->with('info', 'Post Berhasil Diubah');
-    }
-
-    public function destroy(Post $post)
+    public function destroyAdmin(Post $post)
     {
     	$post->delete();
 
-    	return redirect()->route('post.index')->with('danger', 'Post Berhasil Dihapus');
+    	return redirect()->route('post.index.admin')->with('danger', 'Post Berhasil Dihapus');
     }
-    public function destroy2(User $post)
+    public function destroy2Admin(User $post)
     {
         $post->delete();
 
-        return redirect()->route('post.member')->with('danger', 'Post Berhasil Dihapus');
+        return redirect()->route('post.member.admin')->with('danger', 'Post Berhasil Dihapus');
     }
 }

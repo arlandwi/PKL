@@ -35,7 +35,7 @@
 				<div class="modal-body">
 					      
 	<!--Form Dalam Modal -->
-					<form role="form" action="{{route('update')}}" enctype="multipart/form-data" method="post">{{csrf_field()}}
+					<form role="form" action="{{route('update.user')}}" enctype="multipart/form-data" method="post">{{csrf_field()}}
 						<div class="box-body">
 							<div class="form-group">
 								<input type="hidden" name="id" id="id" class="form-control" value="">

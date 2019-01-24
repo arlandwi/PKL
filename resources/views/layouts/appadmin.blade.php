@@ -55,22 +55,27 @@
                             <li><a href="{{ route('register') }}">Register</a></li>
 
                         @else
-                            <li><a href="{{ route('home') }}">Home</a></li>
+                            <li><a href="{{ route('admin.home') }}">Home</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>Project<span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="{{route('post.index.user')}}">All Project</a>
+                                        <a href="{{ route('post.index.admin') }}">All Project</a>
                                     </li>
                                     <li>
-                                        <a href="{{route('post.calendar')}}">Calendar</a>
+                                        <a href="{{ route('post.create.admin') }}">Create Project</a>
                                     </li>
+                                    <!-- <li>
+                                        <a href="{{ route('post.calendar') }}">Calendar</a>
+                                    </li> -->
                                 </ul>
                             </li>
-                            <li><a href="{{route('post.notification')}}">Notification</a></li>
-                            <li><a href="{{route('post.portfolio')}}">Portfolio</a></li>
+                            <!-- <li><a href="{{ route('post.notification') }}">Notification</a></li>
+                            <li><a href="{{ route('post.portfolio') }}">Portfolio</a></li> -->
+                            <li><a href="{{ route('post.member.admin') }}">Member</a></li>
+                            
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -78,7 +83,7 @@
 
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="{{route('post.profil.user')}}">Edit Profile</a>
+                                        <a href="{{ route('post.profil.admin') }}">Edit Profile</a>
                                     </li>
                                     <li>
                                         <a href=""
@@ -87,7 +92,7 @@
                                             Logout
                                         </a>
 
-                                        <form id="logout-form" action="{{ route('user.logout') }}" method="GET" style="display: none;">
+                                        <form id="logout-form" action="{{ route('admin.logout') }}" method="GET" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
                                     </li>

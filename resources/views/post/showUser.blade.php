@@ -6,20 +6,20 @@
 			<div class="col-md-8 col-md-offset-2">
 				<div class="panel panel-default">
 					<div class="panel-heading">{{ $post->title }} | <small>{{ $post->category->name }}</small>
-						<div class="pull-right">
-	                		<form class="" action="{{ route('post.task', $post['id']) }}" method="post">
+						<!-- <div class="pull-right">
+	                		<form class="" action="" method="post">
 	                			{{ csrf_field() }}
-	                			<!-- {{ method_field('UPDATE') }} -->
+	                			{{ method_field('UPDATE') }}
 	                			<button type="submit" class="btn btn-xs btn-info">&nbsp;Add Task&nbsp;</button>	
 	                		</form>
-	                	</div>
-	                	<div class="pull-right">
-	                		<form class="" action="{{ route('post.showtask')}}">
+	                	</div> -->
+	                	<!-- <div class="pull-right">
+	                		<form class="" action="">
 	                			{{ csrf_field() }}
-	                			<!-- {{ method_field('DELETE') }} -->
+	                			{{ method_field('DELETE') }}
 	                			<button type="submit" class="btn btn-xs btn-danger">Lihat Task</button> &nbsp;
 	                		</form>
-	                	</div>
+	                	</div> -->
 					</div>
 					<div class="panel-body"><p>{{ $post->content }}</p></div>
 						
@@ -32,16 +32,22 @@
 					
 					@foreach ($post->comments()->get() as $comment)
 						<div class="panel-body">
-							<h4>{{ $comment->user->name }} - {{ $comment->created_at->diffForHumans() }}</h4>
+							@if($comment->user === null)
+								<h4>{{ $comment->admin->name }} - {{ $comment->created_at->diffForHumans() }}</h4>
 
-							<p>{{ $comment->message }}</p>
+								<p>{{ $comment->message }}</p>
+							@else
+								<h4>{{ $comment->user->name }} - {{ $comment->created_at->diffForHumans() }}</h4>
+
+								<p>{{ $comment->message }}</p>
+							@endif
 						</div>
 					@endforeach
 					<div class="panel-body">
-						<form action="{{ route('post.comment.store', $post) }}" method="post" class="form-horizontal">
+						<form action="{{ route('post.comment.store.user', $post) }}" method="post" class="form-horizontal">
 							{{ csrf_field() }}
 							<textarea name="message" id="" cols="30" rows="5" class="form-control" placeholder="Berikan Komentar"></textarea>
-							<input type="submit" value="Komentar" class="btn btn-primary">							
+							<input type="submit" value="Komentar" class="btn btn-primary">
 						</form>
 					</div>
 				</div>
