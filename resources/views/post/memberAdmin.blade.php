@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.appadmin')
 
 @section('content')
 	<section class="about" id="about">
         <div class="container">
           <div class="row">
             <div class="col-sm-12 text-center">
-              <h2>All Task</h2>
+              <h2>Member</h2>
               <hr>
             </div> 
           </div>
@@ -15,24 +15,11 @@
 	        <div class="col-md-8 col-md-offset-2">
 
 	            @foreach ($posts as $post)
-	            	<div class="panel panel-default">
-		                <div class="panel-heading">
-		                	<a href="">{{ $post->title }} </a> | {{ $post->category->name }}
-
-		                	<div class="pull-right">
-		                		<form class="" action="#">
-		                			<button type="submit" class="btn btn-xs btn-info">Validate</button>	
-		                		</form>
-		                	</div>
-		                	
-		                	<div class="pull-right">
-		                		{{ $post->created_at->diffForHumans() }} &nbsp;
-		                	</div>
-		                </div>
-		                <div class="panel-body">
-		                	<p>{{ str_limit($post->content, 100, '...') }}</p>
-		                </div>
-	            	</div>
+  	            	<div class="panel panel-default">
+  		                <div class="panel-heading">
+  		                	<a href="{{ route('post.show2.admin', $post) }}">{{ $post->name }}</a>
+  		                </div>
+  	            	</div>  
 	            @endforeach
 
 	            {!! $posts->render() !!}

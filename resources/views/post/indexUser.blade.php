@@ -5,7 +5,7 @@
         <div class="container">
           <div class="row">
             <div class="col-sm-12 text-center">
-              <h2>All Task</h2>
+              <h2>All Project</h2>
               <hr>
             </div> 
           </div>
@@ -17,14 +17,22 @@
 	            @foreach ($posts as $post)
 	            	<div class="panel panel-default">
 		                <div class="panel-heading">
-		                	<a href="">{{ $post->title }} </a> | {{ $post->category->name }}
+		                	<a href="{{ route('post.show.user', $post) }}">{{ $post->title }}</a>  | {{ $post->category->name }}
 
-		                	<div class="pull-right">
-		                		<form class="" action="#">
-		                			<button type="submit" class="btn btn-xs btn-info">Validate</button>	
+		                	<!-- <div class="pull-right">
+		                		<form class="" action="">
+		                			{{ csrf_field() }}
+		                			{{ method_field('UPDATE') }}
+		                			<button type="submit" class="btn btn-xs btn-info">&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;</button>	
 		                		</form>
 		                	</div>
-		                	
+		                	<div class="pull-right">
+		                		<form class="" action="" method="post">
+		                			{{ csrf_field() }}
+		                			{{ method_field('DELETE') }}
+		                			<button type="submit" class="btn btn-xs btn-danger">Hapus</button> &nbsp;
+		                		</form>
+		                	</div> -->
 		                	<div class="pull-right">
 		                		{{ $post->created_at->diffForHumans() }} &nbsp;
 		                	</div>
