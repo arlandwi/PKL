@@ -31,10 +31,12 @@ Route::middleware('auth')->group(function(){
 	Route::get('/post/create','PostController@create')->name('post.create')->middleware('auth');
 	Route::post('/post/create','PostController@store')->name('post.store')->middleware('auth');
 
+	Route::post('/userntask/store',"PostController@userntaskstore")->name('userntaskstore')->middleware('auth');
+
 	Route::get('/post/{post}','PostController@show')->name('post.show')->middleware('auth');
 	Route::get('/member/{post}','PostController@show2')->name('post.show2')->middleware('auth');
 
-	Route::get('/taskshow','PostController@showtask')->name('post.showtask')->middleware('auth');
+	Route::post('/addusertask/{task}','PostController@userntask')->name('post.userntask')->middleware('auth');
 	Route::post('/post/{post}/addtask','PostController@task')->name('post.task')->middleware('auth');
 	Route::post('/post/task/store','PostController@taskstore')->name('post.taskstore')->middleware('auth');
 
@@ -51,3 +53,6 @@ Route::middleware('auth')->group(function(){
 
 	Route::post('/post/{post}/comment','PostCommentController@store')->name('post.comment.store')->middleware('auth');
 });
+
+// // -------------------------------multirecordController----------------
+// Route::get('/', array('as'=>'info','uses'=>'multirecordController@index'));

@@ -11,13 +11,13 @@
           </div>
           <div class="row">
             <div class="container">
-			<form class="" action="{{ route('post.taskstore') }}" method="post">
+			<form id="user" class="" action="{{ route('post.taskstore') }}" method="post">
 				{{ csrf_field() }}
 				
 				<div class="form-group has-feedback{{ $errors->has('title') ? ' has-error ' : '' }}">
-					<label for="">Nama Project</label>
+					<label for="">Nama Task</label>
 					
-					<input type="text" class="form-control" name="post_id" placeholder="{{ $post->title }}" value="{{ $post->id }}" readonly>
+					<input type="text" class="form-control" name="post_id" placeholder="" value="{{ $task->id }}" readonly>
 					@if ($errors->has('title'))
 						<span class="help-block">
 							<p>{{ $errors->first('title') }}</p>
@@ -27,7 +27,7 @@
 
 				<div class="form-group has-feedback{{ $errors->has('judul') ? ' has-error ' : '' }}">
 					<label for="">Judul Task</label>
-					<input type="text" class="form-control" name="judul_task" placeholder="Judul Task" value="{{ old('judul') }}">
+					<input type="text" class="form-control" name="judul_task" placeholder="Judul Task" value="{{$task->judul_task}}" readonly>
 					@if ($errors->has('judul'))
 						<span class="help-block">
 							<p>{{ $errors->first('judul') }}</p>
@@ -35,15 +35,19 @@
 					@endif
 				</div>
 
-				<!-- <div class="form-group">
+				<div id="usr" class="usr">
 					<label for="">Pilih User</label><br>
-					@foreach ($users as $user)
-						
-							<input type="checkbox" name="user_id" value="{{ $user->id }}"> {{ $user->name }} 
-						
-					@endforeach
-				</div> -->
-
+					<div id="dynamic">
+					<select name="user_id[]" id="" class="form-control">
+						@foreach ($users as $user)
+							<option value="{{ $user->id }}">{{ $user->name }}</option>
+						@endforeach
+					</select>
+				</div>
+					<input type="button" name="append" id="append" class="btn btn-info addRow" value="+">
+					<input name="button" id="button" type="button" class="btn btn-info addRow" value="X">
+				</div>
+				<br>
 				<div class="form-group has-feedback{{ $errors->has('isi') ? ' has-error ' : '' }}">
 					<label for="">Isi Task</label>
 					<textarea name="isi_task" rows="5" class="form-control" placeholder="Tulis Isi Task">{{ old('isi') }}</textarea>
@@ -61,7 +65,11 @@
 			</div>
 	      </div>
 	    </div>
+
+
 	</section>
+
+	
 	<!-- footer -->
     <footer>
       <div class="container text-center">
@@ -75,3 +83,4 @@
       
     <!-- Akhir footer -->
 @endsection
+

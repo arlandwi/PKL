@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<div class="panel panel-default">
-					<div class="panel-heading">{{ $post->title }} | <small>{{ $post->category->name }}</small>
+					<div class="panel-heading">{{ $post->title }} | <small>Status : {{ $post->category->name }}</small>
 						<div class="pull-right">
 	                		<form class="" action="{{ route('post.task', $post['id']) }}" method="post">
 	                			{{ csrf_field() }}
@@ -13,16 +13,79 @@
 	                			<button type="submit" class="btn btn-xs btn-info">&nbsp;Add Task&nbsp;</button>	
 	                		</form>
 	                	</div>
-	                	<div class="pull-right">
-	                		<form class="" action="{{ route('post.showtask')}}">
-	                			{{ csrf_field() }}
-	                			<!-- {{ method_field('DELETE') }} -->
-	                			<button type="submit" class="btn btn-xs btn-danger">Lihat Task</button> &nbsp;
-	                		</form>
-	                	</div>
+
 					</div>
 					<div class="panel-body"><p>{{ $post->content }}</p></div>
-						
+					<div class="row">
+	        <div class="col-md-8 col-md-offset-2">
+
+	            @foreach ($tasks as $task)
+	            	<div class="panel panel-default">
+		                <div class="panel-heading">
+		                	<a href="">{{ $task->judul_task }}</a>  | {{ $task->post->title }}
+							<div class="pull-right">
+	                			{{ csrf_field() }}
+	                			
+	                			<button type="button" class="btn btn-xs btn-info" data-id="{{$task->id}}" data-toggle="modal" data-target="#userntaskModal" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add User&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button> &nbsp;
+	                		</div>
+
+<!-- Modal -->
+	<div class="modal fade" id="userntaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Penugasan User dan Task</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					    <span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					      
+	<!--Form Dalam Modal -->
+					<form role="form" action="{{route('userntaskstore')}}" enctype="multipart/form-data" method="post">{{csrf_field()}}
+						<div class="box-body">
+							<div class="form-group">
+								<input type="hidden" name="task_id" id="task_id" class="form-control" value="{{$task->id}}">
+							</div>
+							<div class="form-group">
+								<label for="input_nama">Pilih User</label>
+								<select name="user_id" id="user_id" class="form-control">
+									@foreach ($users as $user)
+										<option value="{{ $user->id }}">{{ $user->name }}</option>
+									@endforeach
+								</select>
+							</div>	
+							<div class="box-footer">
+								<button type="submit" class="btn btn-primary">Save</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		                	</div>
+		                	
+		                	<div class="pull-right">
+		                		{{ $task->created_at->diffForHumans() }} &nbsp;
+		                	</div>
+		                </div>
+		                <div class="panel-body">
+		                	<p>Dikerjakan : <strong></strong></p>
+		                </div>
+		                <div class="panel-body">
+		                	<p>{{ str_limit($task->isi_task, 100, '...') }}</p>
+		                </div>
+	            	</div>
+	            @endforeach
+
+	            {!! $tasks->render() !!}
+		    </div>
+		</div>
 				</div>
 			</div>
 

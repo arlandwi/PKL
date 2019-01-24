@@ -109,6 +109,9 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/jquery_append.js') }}"></script>
 
     <script>
         $('#myModal').on('show.bs.modal', function (event) {
@@ -121,6 +124,28 @@
           modal.find('.modal-body #name').val(name);
           modal.find('.modal-body #email').val(email);
         })
+
+        $('#userntaskModal').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var task_id = button.data('task_id') 
+          var user_id = button.data('user_id')  
+          var modal = $(this)
+          modal.find('.modal-body #task_id').val(task_id);
+          modal.find('.modal-body #user_id').val(user_id);
+        })
+
+        $("#append").click( function() {
+        $(".usr").append('<div id="dynamic1">'+
+                            '<select name="user_id[]" id="" class="form-control">'+
+                                
+                            '</select>'+
+                          '</div>');
+        return false;
+        });
+    
+            $("#button").click(function(){
+                $("#dynamic1").remove();
+            }); 
     </script>
 </body>
 </html>

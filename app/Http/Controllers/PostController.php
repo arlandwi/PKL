@@ -7,6 +7,7 @@ use App\Post;
 use App\Category;
 use App\User;
 use App\Task;
+use App\UserAndTask;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -18,11 +19,10 @@ class PostController extends Controller
 
 		return view('post.index', compact('posts'));
 	}
-    public function showtask()
+    public function userntask(Task $task)
     {
-        $tasks = Task::latest()->paginate(3);
-
-        return view('post.showtask', compact('tasks'));
+        $users = User::all();
+        return view('post.user_n_task', compact('task', 'users'));
     }
     public function calendar(){
         $posts = Post::all();
@@ -78,6 +78,20 @@ class PostController extends Controller
     	return redirect() -> route('post.index')->with('success', 'Post Berhasil Ditambahkan');
     }
 
+    public function userntaskstore()
+    {
+        $this->validate(request(), [
+            'user_id' => 'required'
+        ]);
+
+        UserAndTask::create([
+            'user_id' => request('user_id'),
+            'task_id' => request('task_id')
+        ]);
+
+        return back()->with('success', 'Data Berhasil Ditambahkan');
+    }
+
     public function taskstore()
     {
         $this->validate(request(), [
@@ -87,18 +101,20 @@ class PostController extends Controller
 
         Task::create([
             'post_id' => request('post_id'),
-            'user_id' => request('user_id'),
             'judul_task' => request('judul_task'),
             'slug' => str_slug(request('judul_task')),
             'isi_task' => request('isi_task')
         ]);
 
-        return redirect() -> route('post.showtask')->with('success', 'Task Berhasil Ditambahkan');
+        return redirect() -> route('post.index')->with('success', 'Task Berhasil Ditambahkan');
     }
-
+ 
     public function show(Post $post)
     {
-    	return view('post.show', compact('post'));
+        $users = User::All();
+        $tasks = Task::latest()->paginate(3);
+        $one = UserAndTask::All();
+    	return view('post.show', compact('post', 'tasks', 'users', 'one'));
     }
 
     public function show2(User $post)

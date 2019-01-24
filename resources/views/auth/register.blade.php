@@ -39,21 +39,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Status</label>
-
-                            <div class="col-md-6">
-                                <input id="status" type="text" class="form-control" name="status" value="{{ old('status') }}" required autofocus>
-
-                                @if ($errors->has('status'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('status') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
