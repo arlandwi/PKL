@@ -62,20 +62,15 @@
 
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="{{ route('post.index') }}">All Project</a>
+                                        <a href="{{route('post.index.user')}}">All Project</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('post.create') }}">Create Project</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('post.calendar') }}">Calendar</a>
+                                        <a href="{{route('post.calendar')}}">Calendar</a>
                                     </li>
                                 </ul>
                             </li>
-                            <li><a href="{{ route('post.notification') }}">Notification</a></li>
-                            <li><a href="{{ route('post.portfolio') }}">Portfolio</a></li>
-                            <li><a href="{{ route('post.member') }}">Member</a></li>
-                            
+                            <li><a href="{{route('post.notification')}}">Notification</a></li>
+                            <li><a href="{{route('post.portfolio')}}">Portfolio</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -83,16 +78,16 @@
 
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="{{ route('post.profil') }}">Edit Profile</a>
+                                        <a href="{{route('post.profil.user')}}">Edit Profile</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('logout') }}"
+                                        <a href=""
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             Logout
                                         </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        <form id="logout-form" action="{{ route('user.logout') }}" method="GET" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
