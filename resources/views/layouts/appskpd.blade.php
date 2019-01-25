@@ -50,28 +50,11 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
-                        
                         @guest
-                            <li><a href="{{ route('admin.login') }}">Login</a></li>
-                        @elseif ( Auth::user()->status === 'admin' )
-                            <li><a href="{{ route('admin.home') }}">Home</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>Project<span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{ route('post.index.admin') }}">All Project</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('post.pro.admin') }}">Create Project</a>
-                                    </li>
-                                    <!-- <li>
-                                        <a href="">Calendar</a>
-                                    </li> -->
-                                </ul>
-                            </li>
-                            <li><a href="{{ route('post.member.admin') }}">Member</a></li>
+                             <li><a href="{{ route('skpd.login') }}">Login</a></li>
+                            <li><a href="{{ route('skpd.register') }}">Register</a></li>
+                        @elseif ( Auth::user()->status === 'skpd')
+                            <li><a href="">Home</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -88,20 +71,16 @@
                                             Logout
                                         </a>
 
-                                        <form id="logout-form" action="{{ route('admin.logout') }}" method="GET" style="display: none;">
+                                        <form id="logout-form" action="{{ route('skpd.logout') }}" method="GET" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
                                 </ul>
                             </li>
-
-                            @else
-                              <li><a href="{{ route('admin.login') }}">Login</a></li>  
-                            <!-- <li><a href="{{ route('register') }}">Register</a></li> -->
+                        @else
+                            <li><a href="{{ route('skpd.login') }}">Login</a></li>
+                            <li><a href="{{ route('skpd.register') }}">Register</a></li>
                         @endguest
-                            <!-- <li><a href="{{ route('post.notification') }}">Notification</a></li>
-                            <li><a href="{{ route('post.portfolio') }}">Portfolio</a></li> -->
-                            
                     </ul>
                 </div>
             </div>
@@ -124,24 +103,6 @@
           modal.find('.modal-body #name').val(name);
           modal.find('.modal-body #email').val(email);
         })
-
-//Modal Tambah Task->
-        $('#addTaskModal').on('show.bs.modal', function (event) {
-          var button = $(event.relatedTarget)
-          var post_id = button.data('post_id') 
-          var judul_task = button.data('judul_task') 
-          var isi_task = button.date('isi_task')
-          var tgl_mulai = button.data('tgl_mulai') 
-          var deadline = button.data('deadline')
-          var modal = $(this)
-          modal.find('.modal-body #post_id').val(post_id);
-          modal.find('.modal-body #judul_task').val(judul_task);
-          modal.find('.modal-body #isi_task').val(isi_task);
-          modal.find('.modal-body #mulai').val(mulai);
-          modal.find('.modal-body #deadline').val(deadline);
-        })
-//End//
-
     </script>
 </body>
 </html>
