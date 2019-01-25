@@ -50,28 +50,11 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
-                        
                         @guest
-                            <li><a href="{{ route('admin.login') }}">Login</a></li>
-                        @elseif ( Auth::user()->status === 'admin' )
-                            <li><a href="{{ route('admin.home') }}">Home</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>Project<span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{ route('post.index.admin') }}">All Project</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('post.create.admin') }}">Create Project</a>
-                                    </li>
-                                    <!-- <li>
-                                        <a href="">Calendar</a>
-                                    </li> -->
-                                </ul>
-                            </li>
-                            <li><a href="{{ route('post.member.admin') }}">Member</a></li>
+                             <li><a href="{{ route('skpd.login') }}">Login</a></li>
+                            <li><a href="{{ route('skpd.register') }}">Register</a></li>
+                        @elseif ( Auth::user()->status === 'skpd')
+                            <li><a href="">Home</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -88,20 +71,16 @@
                                             Logout
                                         </a>
 
-                                        <form id="logout-form" action="{{ route('admin.logout') }}" method="GET" style="display: none;">
+                                        <form id="logout-form" action="{{ route('skpd.logout') }}" method="GET" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
                                 </ul>
                             </li>
-
-                            @else
-                              <li><a href="{{ route('admin.login') }}">Login</a></li>  
-                            <!-- <li><a href="{{ route('register') }}">Register</a></li> -->
+                        @else
+                            <li><a href="{{ route('skpd.login') }}">Login</a></li>
+                            <li><a href="{{ route('skpd.register') }}">Register</a></li>
                         @endguest
-                            <!-- <li><a href="{{ route('post.notification') }}">Notification</a></li>
-                            <li><a href="{{ route('post.portfolio') }}">Portfolio</a></li> -->
-                            
                     </ul>
                 </div>
             </div>

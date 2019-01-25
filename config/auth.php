@@ -55,6 +55,16 @@ return [
             'driver' => 'token',
             'provider' => 'admins',
         ],
+
+        'skpd' => [
+            'driver' => 'session',
+            'provider' => 'skpds',
+        ],
+
+        'api-skpd' => [
+            'driver' => 'token',
+            'provider' => 'skpds',
+        ],
     ],
 
     /*
@@ -83,6 +93,11 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Admin::class,
+        ],
+
+        'skpds' => [
+            'driver' => 'eloquent',
+            'model' => App\Skpd::class,
         ],
 
         // 'users' => [
@@ -115,6 +130,12 @@ return [
 
         'admins' => [
             'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+
+        'skpds' => [
+            'provider' => 'skpds',
             'table' => 'password_resets',
             'expire' => 60,
         ],

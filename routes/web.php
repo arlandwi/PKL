@@ -43,7 +43,7 @@ Route::group(['prefix'=>'admin'], function(){
 	Route::delete('/post/{post}/delete','PostController@destroyAdmin')->name('post.destroy.admin')->middleware('auth:admin');
 
 	//create project
-	Route::get('/post/create','PostController@createAdmin')->name('post.create.admin')->middleware('auth:admin');
+	Route::get('/create','PostController@createAdmin')->name('post.create.admin')->middleware('auth:admin');
 	Route::post('/post/create','PostController@storeAdmin')->name('post.store.admin')->middleware('auth:admin');
 
 	//create comment
@@ -60,7 +60,6 @@ Route::group(['prefix'=>'admin'], function(){
 //auth user
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/user/logout', 'Auth\LoginController@logoutUser')->name('user.logout');
-Route::post('postMail', 'MailController@post')->name('postmail');
 
 Route::group(['prefix'=>'user'], function(){
 
@@ -85,8 +84,26 @@ Route::group(['prefix'=>'user'], function(){
 	Route::get('/calendar','PostController@calendar')->name('post.calendar')->middleware('auth');
 
 });
+
+//auth skpd
+	Route::get('/skpd','SkpdController@index')->name('skpd.home');
+	Route::group(['prefix'=>'skpd'], function(){
+
+		//login & logout
+		Route::get('/login', 'AuthSkpd\LoginController@showLoginForm')->name('skpd.login');
+		Route::post('/login', 'AuthSkpd\LoginController@login')->name('skpd.login.submit');
+		Route::get('/logout','AuthSkpd\LoginController@logout')->name('skpd.logout');
+
+		//register
+		Route::get('/register', 'AuthSkpd\RegisterController@showRegistrationForm')->name('skpd.register');
+		Route::post('/register', 'AuthSkpd\RegisterController@register')->name('skpd.register.submit');
+
+		Route::post('/postMail', 'MailController@post')->name('postmail')->middleware('auth:skpd');
+
+	});
 	
-	Route::get('/calendar','PostController@calendar')->name('post.calendar')->middleware('auth');	
+
+
 	Route::get('/taskshow','PostController@showtask')->name('post.showtask')->middleware('auth');
 
 
