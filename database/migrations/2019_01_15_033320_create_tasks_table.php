@@ -19,6 +19,8 @@ class CreateTasksTable extends Migration
             $table->string('judul_task');
             $table->string('slug');
             $table->text('isi_task');
+            $table->date('tgl_mulai');
+            $table->date('deadline');
             $table->timestamps();
 
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('CASCADE');

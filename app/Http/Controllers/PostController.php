@@ -7,6 +7,8 @@ use App\Post;
 use App\Category;
 use App\User;
 use App\Task;
+use App\UserAndTask;
+use DB;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -75,7 +77,7 @@ class PostController extends Controller
       return back()->with('success', 'Profil Berhasil Diubah');
     }
 
-    public function createAdmin()
+    public function createproAdmin()
     {
     	$categories = Category::all();
     	return view('post.createAdmin', compact('categories'));
@@ -98,27 +100,52 @@ class PostController extends Controller
     	return redirect() -> route('post.index.admin')->with('success', 'Post Berhasil Ditambahkan');
     }
 
+    public function addUserAdmin()
+    {
+        $this->validate(request(), [
+            'user_id' => 'required',
+            'task_id' => 'required'
+        ]);
+
+        UserAndTask::create([
+            'user_id' => request('user_id'),
+            'task_id' => request('task_id'),
+        ]);
+
+        return back()->with('success', 'Task Berhasil Ditambahkan');
+    }
+
     public function taskstoreAdmin()
     {
         $this->validate(request(), [
             'judul_task' => 'required',
-            'isi_task' => 'required|min:10'
+            'isi_task' => 'required|min:10',
+            'tgl_mulai' => 'required',
+            'deadline' => 'required'
         ]);
 
         Task::create([
             'post_id' => request('post_id'),
-            'user_id' => request('user_id'),
             'judul_task' => request('judul_task'),
+            'tgl_mulai' => request('tgl_mulai'),
+            'deadline' => request('deadline'),
             'slug' => str_slug(request('judul_task')),
             'isi_task' => request('isi_task')
         ]);
 
-        return redirect() -> route('post.showtask')->with('success', 'Task Berhasil Ditambahkan');
+        return back()->with('success', 'Task Berhasil Ditambahkan');
     }
 
     public function showAdmin(Post $post)
     {
-    	return view('post.showAdmin', compact('post'));
+        $tasks = Task::All();
+        $users = User::All();
+        $tugas = DB::table('users')
+            ->join('user_and_tasks', 'users.id', '=', 'user_and_tasks.user_id')
+            ->join('tasks', 'tasks.id', '=', 'user_and_tasks.task_id')
+            ->select('users.name')
+            ->get();
+    	return view('post.showAdmin', compact('post', 'tasks', 'users', 'tugas'));
     }
 
      public function showUser(Post $post)

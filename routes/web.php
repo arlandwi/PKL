@@ -43,7 +43,7 @@ Route::group(['prefix'=>'admin'], function(){
 	Route::delete('/post/{post}/delete','PostController@destroyAdmin')->name('post.destroy.admin')->middleware('auth:admin');
 
 	//create project
-	Route::get('/post/create','PostController@createAdmin')->name('post.create.admin')->middleware('auth:admin');
+	Route::get('/create','PostController@createproAdmin')->name('post.pro.admin')->middleware('auth:admin');
 	Route::post('/post/create','PostController@storeAdmin')->name('post.store.admin')->middleware('auth:admin');
 
 	//create comment
@@ -52,7 +52,7 @@ Route::group(['prefix'=>'admin'], function(){
 	//Task
 	Route::post('/post/{post}/addtask','PostController@taskAdmin')->name('post.task.admin')->middleware('auth:admin');
 	Route::post('/post/task/store','PostController@taskstoreAdmin')->name('post.taskstore.admin')->middleware('auth:admin');
-
+	Route::post('/post/adduserntask','PostController@addUserAdmin')->name('post.tasknuser.admin')->middleware('auth:admin');
 
 });
 

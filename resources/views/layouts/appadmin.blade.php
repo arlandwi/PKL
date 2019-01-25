@@ -65,7 +65,7 @@
                                         <a href="{{ route('post.index.admin') }}">All Project</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('post.create.admin') }}">Create Project</a>
+                                        <a href="{{ route('post.pro.admin') }}">Create Project</a>
                                     </li>
                                     <!-- <li>
                                         <a href="{{ route('post.calendar') }}">Calendar</a>
@@ -121,6 +121,24 @@
           modal.find('.modal-body #name').val(name);
           modal.find('.modal-body #email').val(email);
         })
+
+//Modal Tambah Task->
+        $('#addTaskModal').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var post_id = button.data('post_id') 
+          var judul_task = button.data('judul_task') 
+          var isi_task = button.date('isi_task')
+          var tgl_mulai = button.data('tgl_mulai') 
+          var deadline = button.data('deadline')
+          var modal = $(this)
+          modal.find('.modal-body #post_id').val(post_id);
+          modal.find('.modal-body #judul_task').val(judul_task);
+          modal.find('.modal-body #isi_task').val(isi_task);
+          modal.find('.modal-body #mulai').val(mulai);
+          modal.find('.modal-body #deadline').val(deadline);
+        })
+//End//
+
     </script>
 </body>
 </html>
