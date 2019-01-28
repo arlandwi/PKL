@@ -43,11 +43,7 @@ Route::group(['prefix'=>'admin'], function(){
 	Route::delete('/post/{post}/delete','PostController@destroyAdmin')->name('post.destroy.admin')->middleware('auth:admin');
 
 	//create project
-<<<<<<< HEAD
 	Route::get('/create','PostController@createproAdmin')->name('post.pro.admin')->middleware('auth:admin');
-=======
-	Route::get('/create','PostController@createAdmin')->name('post.create.admin')->middleware('auth:admin');
->>>>>>> 9ae3179ca7be72726797f6d4643b766a1dabe0cd
 	Route::post('/post/create','PostController@storeAdmin')->name('post.store.admin')->middleware('auth:admin');
 
 	//create comment

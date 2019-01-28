@@ -8,18 +8,8 @@
 					<div class="panel-heading">{{ $post->title }} | <small>{{ $post->category->name }}</small>
 						<div class="pull-right">
 	                			{{ csrf_field() }}
-	                			<!-- {{ method_field('UPDATE') }} -->
 	                			<button type="button" class="btn btn-xs btn-info" data-toggle="modal" data-id="{{$post->id}}" data-target="#TaskModal" >&nbsp;Add Task&nbsp;</button>	
 	                	</div>
-	                	<!-- <div class="pull-right">
-	                		<form class="" action="{{ route('post.showtask')}}">
-	                			{{ csrf_field() }}
-	                			{{ method_field('DELETE') }}
-	                			<button type="submit" class="btn btn-xs btn-danger">Lihat Task</button> &nbsp;
-	                		</form>
-	                	</div> -->
-
-
 
 					</div>
 					<div class="panel-body"><p>{{ $post->content }}</p></div>
@@ -30,11 +20,14 @@
 	           
 	            	<div class="panel panel-default">
 		                <div class="panel-heading">
-		                	<a href="">{{ $task->judul_task }}</a>  | {{ $task->post->title }}
+		                	<STRONG>{{ $task->judul_task }}</STRONG>  | {{ $task->post->title }}
+		                	<div class="pull-right">
+		                		{{ csrf_field() }}
+		                		<button type="button" class="btn btn-xs btn-danger" data-id="{{$task->id}}" data-judul="{{$task->judul_task}}" data-isi_task="{{$task->isi_task}}" data-tgl_mulai="{{$task->tgl_mulai}}" data-deadline="{{$task->deadline}}" data-toggle="modal" data-target="#edit123">Edit Task</button>&nbsp;
+		                	</div>
 							<div class="pull-right">
 	                			{{ csrf_field() }}
-	                			
-	                			<button type="button" class="btn btn-xs btn-info" data-id="{{$task->id}}" data-toggle="modal" data-target="#userntaskModal" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add User&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button> &nbsp;
+	                			<button type="button" class="btn btn-xs btn-info" data-id="{{$task->id}}" data-toggle="modal" data-target="#userntaskModal" >Add User</button> &nbsp;
 	                		</div>
 		                	</div>
 		                	
@@ -43,10 +36,11 @@
 		                	</div>
 		                </div>
 		                <div class="panel-body">
-		                	<p>Dikerjakan : {{print_r($tugas)}}<strong></strong></p>
-		                </div>
-		                <div class="panel-body">
-		                	<p>{{ str_limit($task->isi_task, 100, '...') }}</p>
+		                	<p>Dikerjakan : {{($tugas)}}<strong></strong></p>
+		                	<p>Batas Pengerjaan : {{($task->deadline)}}<strong></strong></p>
+		                	<p>Keterangan :</p>
+		                	<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                		{{ str_limit($task->isi_task, 100, '...') }}</p>
 		                </div>
 	            	</div>
 	            @endforeach
@@ -86,7 +80,7 @@
 		</div>
 	</div>
 
-<!-- Modal -->
+<!-- Modal Tambah User di Task-->
 	<div class="modal fade" id="userntaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -125,7 +119,7 @@
 		</div>
 	</div>
 
-<!-- Modal -->
+<!-- Modal Tambah Task -->
 	<div class="modal fade" id="TaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -146,6 +140,53 @@
 							<div class="form-group">
 								<label for="input_judul">Judul Task</label>
 								<input type="text" name="judul_task" id="judul_task" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="input_tgl">Tanggal Mulai</label>
+								<input type="date" name="tgl_mulai" id="tgl_mulai" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="input_deadline">Batas Pengerjaan</label>
+								<input type="date" name="deadline" id="deadline" class="form-control">
+							</div>	
+							<div class="form-group">
+								<label for="input_isitask">Isi Task</label>
+								<textarea name="isi_task" id="isi_task" rows="5" class="form-control" placeholder="Tulis Isi Task"></textarea>
+							</div>	
+							<div class="box-footer">
+								<button type="submit" class="btn btn-primary">Save</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal Edit Task -->
+	<div class="modal fade" id="edit123" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Edit Task</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					    <span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					      
+	<!--Form Dalam Modal -->
+					<form role="form" action="" enctype="multipart/form-data" method="post">{{csrf_field()}}
+						<div class="box-body">
+							<div class="form-group">
+								<input type="hidden" name="id" id="id" class="form-control" value="">
+							</div>
+							<div class="form-group">
+								<label for="judul">Judul Task</label>
+								<input type="text" name="judul" id="judul" class="form-control">
 							</div>
 							<div class="form-group">
 								<label for="input_tgl">Tanggal Mulai</label>

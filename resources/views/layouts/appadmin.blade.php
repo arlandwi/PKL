@@ -125,17 +125,17 @@
           modal.find('.modal-body #email').val(email);
         })
 
-//Modal Tambah Task->
-        $('#addTaskModal').on('show.bs.modal', function (event) {
+//Modal Edit Task->
+        $('#edit').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget)
-          var post_id = button.data('post_id') 
-          var judul_task = button.data('judul_task') 
-          var isi_task = button.date('isi_task')
+          var id = button.data('id') 
+          var judul = button.data('judul') 
+          var isi_task = button.data('isi_task')
           var tgl_mulai = button.data('tgl_mulai') 
           var deadline = button.data('deadline')
           var modal = $(this)
-          modal.find('.modal-body #post_id').val(post_id);
-          modal.find('.modal-body #judul_task').val(judul_task);
+          modal.find('.modal-body #id').val(id);
+          modal.find('.modal-body #judul').val(judul);
           modal.find('.modal-body #isi_task').val(isi_task);
           modal.find('.modal-body #mulai').val(mulai);
           modal.find('.modal-body #deadline').val(deadline);
