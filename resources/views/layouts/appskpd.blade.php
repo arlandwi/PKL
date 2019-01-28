@@ -54,7 +54,8 @@
                              <li><a href="{{ route('skpd.login') }}">Login</a></li>
                             <li><a href="{{ route('skpd.register') }}">Register</a></li>
                         @elseif ( Auth::user()->status === 'skpd')
-                            <li><a href="">Home</a></li>
+                            <li><a href="{{route('skpd.home')}}">Home</a></li>
+                            <li><a href="{{route('pengaduan')}}">Pengaduan</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

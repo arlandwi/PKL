@@ -8,7 +8,7 @@
                 <div class="panel-heading">Login Skpd</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('admin.login.submit') }}">
+                    <form class="form-horizontal" method="POST" action="{{ route('skpd.login.submit') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">

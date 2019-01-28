@@ -10,25 +10,25 @@ class MailController extends Controller
     public function post(Request $req)
     {
     	$req->validate([
-    		'name'=>'required',
+    		
     		'email'=>'required',
-    		'subject'=>'required',
+            'lokasi'=>'required',
     		'message'=>'required',
     	]);
 
     	$data = [
-    		'name'=>$req->name,
     		'email'=>$req->email,
-    		'subject'=>$req->subject,
+    		'lokasi'=>$req->lokasi,
+            'subject'=>$req->subject,
     		'bodyMassage'=>$req->message,
     	];
 
     	Mail::send('post.mail',$data,function($message) use($data){
     		$message->from($data['email']);
-    		$message->to('diskominfositubondo@gmail.com', 'laravel2');
+    		$message->to('diskominfositubondo@gmail.com', 'Pengaduan');
     		$message->subject($data['subject']);
     	});
 
-    	return back()->with('success', 'Masukan Berhasil Terkirim');
+    	return back()->with('success', 'Pengaduan Berhasil Terkirim');
     }
 }

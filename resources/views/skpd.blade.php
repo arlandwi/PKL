@@ -49,7 +49,7 @@
     <!-- akhir about -->
 
     <!-- contact -->
-      <section class="contact" id="contact">
+      <!-- <section class="contact" id="contact">
         <div class="container">
           <div class="row">
             <div class="col-sm-12 text-center">
@@ -84,7 +84,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
    <!-- akhir contact -->
 
     <!-- footer -->

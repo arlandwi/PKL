@@ -26,4 +26,9 @@ class SkpdController extends Controller
     {
         return view('skpd');
     }
+
+    public function pengaduan()
+    {
+        return view('post.pengaduanSkpd');
+    }
 }

@@ -43,11 +43,8 @@ Route::group(['prefix'=>'admin'], function(){
 	Route::delete('/post/{post}/delete','PostController@destroyAdmin')->name('post.destroy.admin')->middleware('auth:admin');
 
 	//create project
-<<<<<<< HEAD
 	Route::get('/create','PostController@createproAdmin')->name('post.pro.admin')->middleware('auth:admin');
-=======
-	Route::get('/create','PostController@createAdmin')->name('post.create.admin')->middleware('auth:admin');
->>>>>>> 9ae3179ca7be72726797f6d4643b766a1dabe0cd
+	// Route::get('/create','PostController@createAdmin')->name('post.create.admin')->middleware('auth:admin');
 	Route::post('/post/create','PostController@storeAdmin')->name('post.store.admin')->middleware('auth:admin');
 
 	//create comment
@@ -57,6 +54,10 @@ Route::group(['prefix'=>'admin'], function(){
 	Route::post('/post/{post}/addtask','PostController@taskAdmin')->name('post.task.admin')->middleware('auth:admin');
 	Route::post('/post/task/store','PostController@taskstoreAdmin')->name('post.taskstore.admin')->middleware('auth:admin');
 	Route::post('/post/adduserntask','PostController@addUserAdmin')->name('post.tasknuser.admin')->middleware('auth:admin');
+
+	//notification
+	Route::get('/notification','PostController@notificationAdmin')->name('post.notification.admin')->middleware('auth:admin');
+
 
 });
 
@@ -72,8 +73,7 @@ Route::group(['prefix'=>'user'], function(){
 	Route::post('/update',"PostController@updateproUser")->name('update.user')->middleware('auth');
 
 	//notification
-	Route::get('/notification','PostController@notification')->name('post.notification')->middleware('auth');
-
+	
 	//portofolio
 	Route::get('/portfolio','PostController@portfolio')->name('post.portfolio')->middleware('auth');
 
@@ -102,6 +102,8 @@ Route::group(['prefix'=>'user'], function(){
 		Route::get('/register', 'AuthSkpd\RegisterController@showRegistrationForm')->name('skpd.register');
 		Route::post('/register', 'AuthSkpd\RegisterController@register')->name('skpd.register.submit');
 
+		Route::get('/pengaduan', 'SkpdController@pengaduan')->name('pengaduan')->middleware('auth:skpd');
+		Route::post('/postPengaduan', 'PostController@storePengaduan')->name('pengaduan.submit')->middleware('auth:skpd');
 		Route::post('/postMail', 'MailController@post')->name('postmail')->middleware('auth:skpd');
 
 	});

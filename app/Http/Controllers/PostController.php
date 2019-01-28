@@ -7,6 +7,7 @@ use App\Post;
 use App\Category;
 use App\User;
 use App\Task;
+use App\Pengaduan;
 use App\UserAndTask;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -39,10 +40,10 @@ class PostController extends Controller
 
         return view('post.calendar', compact('posts'));
     }
-	public function notification(){
-		$posts = Post::latest()->paginate(3);
+	public function notificationAdmin(){
+		$pengaduan = Pengaduan::orderBy('created_at', 'DESC')->get();
 
-		return view('post.notification', compact('posts'));
+		return view('post.notification', compact('pengaduan'));
 	}
     public function memberAdmin(){
         $posts = User::latest()->paginate(3);
@@ -210,10 +211,31 @@ class PostController extends Controller
 
     	return redirect()->route('post.index.admin')->with('danger', 'Post Berhasil Dihapus');
     }
+
     public function destroy2Admin(User $post)
     {
         $post->delete();
 
         return redirect()->route('post.member.admin')->with('danger', 'Post Berhasil Dihapus');
+    }
+
+    public function storePengaduan()
+    {
+         $this->validate(request(), [
+            'subject' => 'required',
+            'lokasi' => 'required',
+            'isi' => 'required',
+        ]);
+
+        $skpd = Auth::user()->id;
+
+        Pengaduan::create([
+            'skpd_id' => $skpd,
+            'subject' => request('subject'),
+            'lokasi' => request('lokasi'),
+            'isi' => request('isi')
+        ]);
+
+        return back()->with('success', 'Pengaduan berhasil dikirim');
     }
 }
