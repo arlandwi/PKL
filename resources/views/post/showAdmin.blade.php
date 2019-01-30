@@ -19,11 +19,12 @@
 									<br>
 			        				<div class="col-md-10 col-md-offset-1">
 
+						            	<sup>{{ $task->created_at->diffForHumans() }}</sup>
 						            	<div class="panel panel-default">
 							                <div class="panel-heading" style="background: #E5E5E5;">
-							                	<STRONG>{{ $task->judul_task }}</STRONG>  | {{ $task->post->title }}
+							                	<STRONG>{{ $task->judul_task }}</STRONG>  | {{str_limit($task->post->title,20,'...') }}
 							                	 <div class="pull-right">
-							                	<sup>{{ $task->created_at->diffForHumans() }}</sup> &nbsp;
+							                	 &nbsp;
 							                	</div>
 							                	<div class="pull-right">
 							                		{{ csrf_field() }}
@@ -233,24 +234,52 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel">Detail Task</h4>
+					<h4 class="modal-title"  id="myModalLabel">Detail Task</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					    <span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 
-				<div class="modal-body">	      
-					<div class="panel-body" style="background: #E5E5E5;">
-						<p>Dikerjakan : 
-						    @foreach($utask as $uta)
-						    	{{ $uta->user->name }}<strong></strong>,
-						    @endforeach
-						</p>
-						<!-- <p>Dikerjakan : <strong></strong></p>  -->
-	                	<p>Batas Pengerjaan : {{($task->deadline)}}<strong></strong></p>
-						<p>Keterangan :</p>
-						<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							                		{{ str_limit($task->isi_task, 100, '...') }}</p>
+				<div class="modal-body" >	      
+					<div class="panel-body" >
+						@if($tasks->isEmpty())
+
+						@else
+						<center>
+						<table border="0" cellspacing="5" width="530">
+							<tr>
+								<td width="100">Nama Project</td>
+								<td width="15"> :</td>
+								<td> {{$task->post->title}}</td>
+							</tr>							
+							<tr>
+								<td width="100">Nama Task</td>
+								<td width="15"> :</td>
+								<td>{{$task->judul_task}}</td>
+							</tr>
+							<tr>
+								<td width="100">Dikerjakan</td>
+								<td width="15"> :</td>
+								<td>
+									   	@foreach($utask as $uta)
+									    	{{ $uta->user->name }}<strong></strong>,
+									    @endforeach
+								</td>
+							</tr>
+							<tr>
+								<td width="100">Deadline</td>
+								<td width="15"> :</td>
+	                			<td>{{($task->deadline)}}</td>
+							</tr>
+								<td width="100">Keterangan</td>	
+								<td width="15"> :</td>							
+								<td>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ str_limit($task->isi_task, 100, '...') }}
+							    </td>
+							</tr>
+						</table>
+						</center>
+						@endif
 					</div>
 				</div>
 				<div class="modal-footer">

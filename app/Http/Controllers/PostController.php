@@ -155,7 +155,7 @@ class PostController extends Controller
         //     ->join('user_and_tasks', 'users.id', '=', 'user_and_tasks.user_id')
         //     ->join('tasks', 'tasks.id', '=', 'user_and_tasks.task_id')
         //     ->select('users.name')
-        //     ->groupBy('users.id')
+        //     ->groupBy('tasks.id, users.id')
         //     ->get();
             
     	return view('post.showAdmin', compact('post', 'project', 'tasks', 'users', 'tugas','utask'));
