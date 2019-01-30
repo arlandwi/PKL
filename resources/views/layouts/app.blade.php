@@ -69,7 +69,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li><a href="{{route('post.notification')}}">Notification</a></li>
+                            <li><a href="">Notification</a></li>
                             <li><a href="{{route('post.portfolio')}}">Portfolio</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>

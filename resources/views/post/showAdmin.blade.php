@@ -14,59 +14,62 @@
 					</div>
 					<div class="panel-body"><p>{{ $post->content }}</p></div>
 						<div class="row">
-							 @foreach ($tasks as $task)
-	        <div class="col-md-8 col-md-offset-2">
+								@foreach ($tasks as $task)
+									@if($task->post_id === $post->id)
+									<br>
+			        				<div class="col-md-10 col-md-offset-1">
 
-	           
-	            	<div class="panel panel-default">
-		                <div class="panel-heading">
-		                	<STRONG>{{ $task->judul_task }}</STRONG>  | {{ $task->post->title }}
-		                	<div class="pull-right">
-		                		{{ csrf_field() }}
-		                		<button type="button" class="btn btn-xs btn-danger" data-id="{{$task->id}}" data-judul="{{$task->judul_task}}" data-isi_task="{{$task->isi_task}}" data-tgl_mulai="{{$task->tgl_mulai}}" data-deadline="{{$task->deadline}}" data-toggle="modal" data-target="#edit123">Edit Task</button>&nbsp;
-		                	</div>
-							<div class="pull-right">
-	                			{{ csrf_field() }}
-	                			<button type="button" class="btn btn-xs btn-info" data-id="{{$task->id}}" data-toggle="modal" data-target="#userntaskModal" >Add User</button> &nbsp;
-	                		</div>
-		                	</div>
-		                	
-		                	<div class="pull-right">
-		                		{{ $task->created_at->diffForHumans() }} &nbsp;
-		                	</div>
-		                </div>
-		                <div class="panel-body">
-		                	<p>Dikerjakan : {{($tugas)}}<strong></strong></p>
-		                	<p>Batas Pengerjaan : {{($task->deadline)}}<strong></strong></p>
-		                	<p>Keterangan :</p>
-		                	<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                		{{ str_limit($task->isi_task, 100, '...') }}</p>
-		                </div>
-	            	</div>
-	            @endforeach
-
-		    </div>
+						            	<div class="panel panel-default">
+							                <div class="panel-heading" style="background: #E5E5E5;">
+							                	<STRONG>{{ $task->judul_task }}</STRONG>  | {{ $task->post->title }}
+							                	 <div class="pull-right">
+							                	<sup>{{ $task->created_at->diffForHumans() }}</sup> &nbsp;
+							                	</div>
+							                	<div class="pull-right">
+							                		{{ csrf_field() }}
+							                		<button type="button" class="btn btn-xs btn-danger" data-id="{{$task->id}}" data-judul="{{$task->judul_task}}" data-isi_task="{{$task->isi_task}}" data-tgl_mulai="{{$task->tgl_mulai}}" data-deadline="{{$task->deadline}}" data-toggle="modal" data-target="#edit123">Edit Task</button>&nbsp;
+							                	</div>
+												<div class="pull-right">
+						                			{{ csrf_field() }}
+						                			<button type="button" class="btn btn-xs btn-info" data-id="{{$task->id}}" data-toggle="modal" data-target="#userntaskModal" >Add User</button> &nbsp;
+						                		</div>
+						                		<div class="pull-right">
+							                		{{ csrf_field() }}
+							                		<button type="button" class="btn btn-xs btn-success"  data-toggle="modal" data-target="#lihat">Lihat Detail</button>&nbsp;
+							                	</div>
+							                </div>
+							                	
+							               
+							            </div>
+							                
+						                	
+			            			</div>
+			            			@else
+	           						@endif
+	            			@endforeach
+		    		</div>
 				</div>
 			</div>
 
 			                	
 
-			<div class="col-md-8 col-md-offset-2">
+			<div class="col-sm-8 col-sm-offset-2">
 				<div class="panel panel-default">
 					<div class="panel-heading">Tambahkan Komentar</div>
 					
 					@foreach ($post->comments()->get() as $comment)
-						<div class="panel-body">
+						<div class="panel-body" style="max-height: 65px">
 							@if($comment->user === null)
-								<h4>{{ $comment->admin->name }} - {{ $comment->created_at->diffForHumans() }}</h4>
+								<h5><b>{{ $comment->admin->name }}</b><sup class="pull-right">{{ $comment->created_at->diffForHumans() }}</sup></h5>
 
 								<p>{{ $comment->message }}</p>
 							@else
-								<h4>{{ $comment->user->name }} - {{ $comment->created_at->diffForHumans() }}</h4>
+								<h5><b>{{ $comment->user->name }}</b><sup class="pull-right">{{ $comment->created_at->diffForHumans() }}</sup></h5>
 
 								<p>{{ $comment->message }}</p>
 							@endif
 						</div>
+						<hr style="margin-bottom: 0px">
 					@endforeach
 					<div class="panel-body">
 						<form action="{{ route('post.comment.store.admin', $post) }}" method="post" class="form-horizontal">
@@ -208,6 +211,39 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modal Lihat Detail -->
+	<div class="modal fade" id="lihat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Detail Task</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					    <span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body">	      
+					<div class="panel-body" style="background: #E5E5E5;">
+						<p>Dikerjakan : 
+						    @foreach($utask as $uta)
+						    	{{ $uta->user->name }}<strong></strong>,
+						    @endforeach
+						</p>
+						<!-- <p>Dikerjakan : <strong></strong></p>  -->
+	                	<p>Batas Pengerjaan : {{($task->deadline)}}<strong></strong></p>
+						<p>Keterangan :</p>
+						<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							                		{{ str_limit($task->isi_task, 100, '...') }}</p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>

@@ -44,10 +44,9 @@ Route::group(['prefix'=>'admin'], function(){
 
 	//create project
 	Route::get('/create','PostController@createproAdmin')->name('post.pro.admin')->middleware('auth:admin');
-<<<<<<< HEAD
-	// Route::get('/create','PostController@createAdmin')->name('post.create.admin')->middleware('auth:admin');
-=======
->>>>>>> 0c7e45df889601e72d65dc760dbe6c1653780f85
+
+	 Route::get('/createadmin','PostController@createAdmin')->name('post.create.admin')->middleware('auth:admin');
+
 	Route::post('/post/create','PostController@storeAdmin')->name('post.store.admin')->middleware('auth:admin');
 
 	//create comment
@@ -66,7 +65,7 @@ Route::group(['prefix'=>'admin'], function(){
 
 
 //auth user
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/user/logout', 'Auth\LoginController@logoutUser')->name('user.logout');
 
 Route::group(['prefix'=>'user'], function(){

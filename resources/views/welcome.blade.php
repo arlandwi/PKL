@@ -85,7 +85,7 @@
                 <div class="cover-container">
                     <div class="inner-cover col-md-6" style="margin-left: 25%;">
                         <h1 class="cover-heading">
-                            APLIKASI LAPORAN MANAJEMEN PROYEK
+                           <b> APLIKASI LAPORAN MANAJEMEN PROYEK </b>
                         </h1>
                         <hr style="border-color: white;height: 4px;">
                         <p class="lead">
@@ -93,9 +93,9 @@
                                     @auth
                                         <a href="{{ url('/home') }}" class="btn btn-outline-primary btn-lg">Home</a>
                                     @else
-                                        <a href="{{ route('login') }}" class="btn btn-outline-primary btn-lg">Login</a>
+                                        <a href="{{ route('skpd.home') }}" class="btn btn-primary btn-lg">SKPD</a>
 
-                                        <a href="{{ route('register') }}" class="btn btn-outline-success btn-lg">Register</a>
+                                        <a href="{{ route('home') }}" class="btn btn-success btn-lg">Member</a>
                                     @endauth
                             @endif
                         </p>

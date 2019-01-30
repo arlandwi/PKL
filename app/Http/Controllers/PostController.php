@@ -139,14 +139,17 @@ class PostController extends Controller
 
     public function showAdmin(Post $post)
     {
+        $utask = UserAndTask::All();
         $tasks = Task::All();
         $users = User::All();
-        $tugas = DB::table('users')
-            ->join('user_and_tasks', 'users.id', '=', 'user_and_tasks.user_id')
-            ->join('tasks', 'tasks.id', '=', 'user_and_tasks.task_id')
-            ->select('users.name')
-            ->get();
-    	return view('post.showAdmin', compact('post', 'tasks', 'users', 'tugas'));
+        // $tugas = DB::table('users')
+        //     ->join('user_and_tasks', 'users.id', '=', 'user_and_tasks.user_id')
+        //     ->join('tasks', 'tasks.id', '=', 'user_and_tasks.task_id')
+        //     ->select('users.name')
+        //     ->groupBy('users.id')
+        //     ->get();
+            
+    	return view('post.showAdmin', compact('post', 'project', 'tasks', 'users', 'tugas','utask'));
     }
 
      public function showUser(Post $post)
