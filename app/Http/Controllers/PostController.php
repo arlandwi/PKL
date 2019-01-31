@@ -78,6 +78,15 @@ class PostController extends Controller
       return back()->with('success', 'Profil Berhasil Diubah');
     }
 
+    public function updateTaskAdmin(Request $request){
+      $updatee = \DB::table('tasks')->select('id')->where('id', $request->input('id'));
+      $updatee->update(['judul_task' => $request->input('judul')]);
+      $updatee->update(['tgl_mulai' => $request->input('mulai')]);
+      $updatee->update(['deadline' => $request->input('deadline')]);
+      $updatee->update(['isi_task' => $request->input('isi')]);
+      return back()->with('success', 'Task Berhasil Di Edit');
+    }
+
     public function createproAdmin()
     {
     	$categories = Category::all();
@@ -240,5 +249,13 @@ class PostController extends Controller
         ]);
 
         return back()->with('success', 'Pengaduan berhasil dikirim');
+    }
+
+    public function destroyTaskAdmin(Request $request)
+    {
+        $destroy = DB::table('tasks')->select('id')->where('id', $request->input('id'));
+        $destroy->delete();
+
+        return redirect()->back(); 
     }
 }

@@ -49,13 +49,16 @@ Route::group(['prefix'=>'admin'], function(){
 
 	Route::post('/post/create','PostController@storeAdmin')->name('post.store.admin')->middleware('auth:admin');
 
-	//create comment
+	//comment
 	Route::post('/post/{post}/comment','PostCommentController@storeAdmin')->name('post.comment.store.admin')->middleware('auth:admin');
+	Route::post('/comment/destroy','PostCommentController@destroyAdmin')->name('post.comment.destroy.admin')->middleware('auth:admin');
 
 	//Task
 	Route::post('/post/{post}/addtask','PostController@taskAdmin')->name('post.task.admin')->middleware('auth:admin');
 	Route::post('/post/task/store','PostController@taskstoreAdmin')->name('post.taskstore.admin')->middleware('auth:admin');
 	Route::post('/post/adduserntask','PostController@addUserAdmin')->name('post.tasknuser.admin')->middleware('auth:admin');
+	Route::post('/post/destroy','PostController@destroyTaskAdmin')->name('post.destroytask.admin')->middleware('auth:admin');
+	Route::post('/post/edit','PostController@updateTaskAdmin')->name('post.updatetask.admin')->middleware('auth:admin');
 
 	//notification
 	Route::get('/notification','PostController@notificationAdmin')->name('post.notification.admin')->middleware('auth:admin');

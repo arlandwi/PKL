@@ -127,21 +127,37 @@
         })
 
 //Modal Edit Task->
-        $('#edit').on('show.bs.modal', function (event) {
+        $('#edittask').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget)
           var id = button.data('id') 
           var judul = button.data('judul') 
-          var isi_task = button.data('isi_task')
-          var tgl_mulai = button.data('tgl_mulai') 
+          var isi = button.data('isi')
+          var mulai = button.data('mulai') 
           var deadline = button.data('deadline')
           var modal = $(this)
           modal.find('.modal-body #id').val(id);
           modal.find('.modal-body #judul').val(judul);
-          modal.find('.modal-body #isi_task').val(isi_task);
+          modal.find('.modal-body #isi').val(isi);
           modal.find('.modal-body #mulai').val(mulai);
           modal.find('.modal-body #deadline').val(deadline);
         })
 //End//
+
+//modal hapus komen
+        $('#hapuskomen').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var id = button.data('id') 
+          var modal = $(this)
+          modal.find('.modal-body #id').val(id);
+        })
+
+//modal hapus task
+        $('#hapustask').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var id = button.data('id') 
+          var modal = $(this)
+          modal.find('.modal-body #id').val(id);
+        })
 
     </script>
 </body>

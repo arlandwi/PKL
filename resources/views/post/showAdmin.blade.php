@@ -27,8 +27,12 @@
 							                	</div>
 							                	<div class="pull-right">
 							                		{{ csrf_field() }}
-							                		<button type="button" class="btn btn-xs btn-danger" data-id="{{$task->id}}" data-judul="{{$task->judul_task}}" data-isi_task="{{$task->isi_task}}" data-tgl_mulai="{{$task->tgl_mulai}}" data-deadline="{{$task->deadline}}" data-toggle="modal" data-target="#edit123">Edit Task</button>&nbsp;
+							                		<button type="button" class="btn btn-xs btn-danger" data-id="{{$task->id}}" data-toggle="modal" data-target="#hapustask">Hapus</button>&nbsp;
 							                	</div>
+							                	<div class="pull-right">
+						                			{{ csrf_field() }}
+						                			<button type="button" class="btn btn-xs btn-warning" data-id="{{$task->id}}" data-judul="{{$task->judul_task}}" data-mulai="{{$task->tgl_mulai}}" data-deadline="{{$task->deadline}}" data-isi="{{$task->isi_task}}" data-toggle="modal" data-target="#edittask" >Edit</button> &nbsp;
+						                		</div>
 												<div class="pull-right">
 						                			{{ csrf_field() }}
 						                			<button type="button" class="btn btn-xs btn-info" data-id="{{$task->id}}" data-toggle="modal" data-target="#userntaskModal" >Add User</button> &nbsp;
@@ -50,23 +54,32 @@
 		    		</div>
 				</div>
 			</div>
-
-			                	
-
-			<div class="col-sm-8 col-sm-offset-2">
+			<div class="col-xs-8 col-xs-offset-2">
 				<div class="panel panel-default">
-					<div class="panel-heading">Tambahkan Komentar</div>
+					<div class="panel-heading">Komentar</div>
 					
 					@foreach ($post->comments()->get() as $comment)
-						<div class="panel-body" style="max-height: 65px">
+						<div class="panel-body" style="max-height: 100%; height: 100%;" >
 							@if($comment->user === null)
-								<h5><b>{{ $comment->admin->name }}</b><sup class="pull-right">{{ $comment->created_at->diffForHumans() }}</sup></h5>
+								<h5>
+									<b>{{ $comment->admin->name }}</b>
+									<sup class="pull-right">{{ $comment->created_at->diffForHumans() }}
+										<button type="submit" class="glyphicon glyphicon-trash" style="margin-left: 10px;" aria-hidden="true" data-id="{{$comment->id}}" data-toggle="modal" data-target="#hapuskomen">
+										</button>
+									</sup>
+								</h5>
 
-								<p>{{ $comment->message }}</p>
+								<p style="word-wrap: break-word;">{{ $comment->message }}</p>
 							@else
-								<h5><b>{{ $comment->user->name }}</b><sup class="pull-right">{{ $comment->created_at->diffForHumans() }}</sup></h5>
+								<h5>
+									<b>{{ $comment->user->name }}</b>
+									<sup class="pull-right">{{ $comment->created_at->diffForHumans() }}
+										<button type="submit" class="glyphicon glyphicon-trash" style="margin-left: 10px;" aria-hidden="true" data-id="{{$comment->id}}" data-toggle="modal" data-target="#hapuskomen">
+										</button>
+									</sup>
+								</h5>
 
-								<p>{{ $comment->message }}</p>
+								<p style="word-wrap: break-word;">{{ $comment->message }}</p>
 							@endif
 						</div>
 						<hr style="margin-bottom: 0px">
@@ -170,7 +183,7 @@
 	</div>
 
 	<!-- Modal Edit Task -->
-	<div class="modal fade" id="edit123" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" id="edittask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -180,9 +193,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					      
-	<!--Form Dalam Modal -->
-					<form role="form" action="" enctype="multipart/form-data" method="post">{{csrf_field()}}
+					<form role="form" action="{{route('post.updatetask.admin')}}" enctype="multipart/form-data" method="post">{{csrf_field()}}
 						<div class="box-body">
 							<div class="form-group">
 								<input type="hidden" name="id" id="id" class="form-control" value="">
@@ -193,7 +204,7 @@
 							</div>
 							<div class="form-group">
 								<label for="input_tgl">Tanggal Mulai</label>
-								<input type="date" name="tgl_mulai" id="tgl_mulai" class="form-control">
+								<input type="date" name="mulai" id="mulai" class="form-control">
 							</div>
 							<div class="form-group">
 								<label for="input_deadline">Batas Pengerjaan</label>
@@ -201,7 +212,7 @@
 							</div>	
 							<div class="form-group">
 								<label for="input_isitask">Isi Task</label>
-								<textarea name="isi_task" id="isi_task" rows="5" class="form-control" placeholder="Tulis Isi Task"></textarea>
+								<textarea name="isi" id="isi" rows="5" class="form-control" placeholder="Tulis Isi Task"></textarea>
 							</div>	
 							<div class="box-footer">
 								<button type="submit" class="btn btn-primary">Save</button>
@@ -243,8 +254,62 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modal Hapus Komen -->
+	<div class="modal fade" id="hapuskomen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Hapus Komentar</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					    <span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body">	      
+					<div class="panel-body">
+						<form action="{{route('post.comment.destroy.admin')}}" enctype="multipart/form-data" method="post">
+							{{csrf_field()}}
+							<p>Hapus Komentar ?</p>
+							<input type="hidden" name="id" id="id" value="">
+							<button type="submit" class="btn btn-info pull-right" data-dismiss="modal" style="margin-left:6px;">Batalkan</button>
+							<button type="submit" class="btn btn-danger pull-right">Hapus</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>		
+
+	<!-- Modal Hapus Task -->
+	<div class="modal fade" id="hapustask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Hapus task</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					    <span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body">	      
+					<div class="panel-body">
+						<form action="{{route('post.destroytask.admin')}}" enctype="multipart/form-data" method="post">
+							{{csrf_field()}}
+							<p>Hapus Task ?</p>
+							<input type="hidden" name="id" id="id" value="">
+							<button type="button" class="btn btn-info pull-right" data-dismiss="modal" style="margin-left:6px;">Batalkan</button>
+							<button type="submit" class="btn btn-danger pull-right">Hapus</button>
+						</form>
+					</div>
+				</div>			
+			
 			</div>
 		</div>
 	</div>

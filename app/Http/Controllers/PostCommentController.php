@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Comment;
 use App\Admin;
+use DB;
 
 class PostCommentController extends Controller
 {
@@ -39,5 +40,13 @@ class PostCommentController extends Controller
         ));
 
         return redirect()->back();
+    }
+
+    public function destroyAdmin(Request $request)
+    {
+        $destroy = DB::table('comments')->select('id')->where('id', $request->input('id'));
+        $destroy->delete();
+
+        return redirect()->back(); 
     }
 }
