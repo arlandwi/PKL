@@ -18,8 +18,9 @@ class PostController extends Controller
 	public function indexAdmin()
 	{
 		$posts = Post::latest()->paginate(3);
+        $categories = Category::all();
 
-		return view('post.indexAdmin', compact('posts'));
+		return view('post.indexAdmin', compact('posts','categories'));
 	}
 
     public function indexUser()
@@ -85,6 +86,14 @@ class PostController extends Controller
       $updatee->update(['deadline' => $request->input('deadline')]);
       $updatee->update(['isi_task' => $request->input('isi')]);
       return back()->with('success', 'Task Berhasil Di Edit');
+    }
+
+    public function updateProjectAdmin(Request $request){
+      $updatee = \DB::table('posts')->select('id')->where('id', $request->input('id'));
+      $updatee->update(['title' => $request->input('title')]);
+      $updatee->update(['content' => $request->input('content')]);
+      $updatee->update(['category_id' => $request->input('catid')]);
+      return back()->with('success', 'Project Berhasil Di Edit');
     }
 
     public function createproAdmin()
@@ -256,6 +265,27 @@ class PostController extends Controller
         $destroy = DB::table('tasks')->select('id')->where('id', $request->input('id'));
         $destroy->delete();
 
-        return redirect()->back(); 
+        return redirect()->back()->with('success', 'Project Berhasil Dihapus'); 
+    }
+
+     public function destroyProjectAdmin(Request $request)
+    {
+        $destroy = DB::table('posts')->select('id')->where('id', $request->input('id'));
+        $destroy->delete();
+
+        return redirect()->back()->with('success', 'Project Berhasil Dihapus'); 
+    }
+
+     public function createProjectAdmin(Request $request)
+    {
+       
+        Post::create([
+            'title' => request('title'),
+            'slug' => str_slug(request('title')),
+            'content' => request('content'),
+            'category_id' => request('catid')
+        ]);
+
+        return back()->with('success', 'Project berhasil dibuat');
     }
 }

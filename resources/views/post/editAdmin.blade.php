@@ -15,7 +15,6 @@
 							<label for="">Title</label>
 							<input type="text" class="form-control" name="title" placeholder="Post Title" value="{{ $post->title }}">
 						</div>
-
 						<div class="form-group">
 							<label for="">Category</label>
 							<select name="category_id" id="" class="form-control">

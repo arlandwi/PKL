@@ -41,7 +41,9 @@ Route::group(['prefix'=>'admin'], function(){
 	Route::get('/post/{post}','PostController@showAdmin')->name('post.show.admin')->middleware('auth:admin');
 	Route::patch('/post/{post}/edit','PostController@updateAdmin')->name('post.update.admin')->middleware('auth:admin');
 	Route::delete('/post/{post}/delete','PostController@destroyAdmin')->name('post.destroy.admin')->middleware('auth:admin');
-
+	Route::post('/post/editproject','PostController@updateProjectAdmin')->name('post.updateproject.admin')->middleware('auth:admin');
+	Route::post('/post/destroyproject','PostController@destroyProjectAdmin')->name('post.destroyproject.admin')->middleware('auth:admin');
+	Route::post('/post/createproject','PostController@createProjectAdmin')->name('post.createproject.admin')->middleware('auth:admin');
 	//create project
 	Route::get('/create','PostController@createproAdmin')->name('post.pro.admin')->middleware('auth:admin');
 

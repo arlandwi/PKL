@@ -241,6 +241,9 @@
 
 				<div class="modal-body">	      
 					<div class="panel-body" style="background: #E5E5E5;">
+						@if($tasks->isEmpty())
+						 <p>haha</p>
+						@else
 						<p>Dikerjakan : 
 						    @foreach($utask as $uta)
 						    	{{ $uta->user->name }}<strong></strong>,
@@ -251,6 +254,7 @@
 						<p>Keterangan :</p>
 						<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							                		{{ str_limit($task->isi_task, 100, '...') }}</p>
+						@endif
 					</div>
 				</div>
 				<div class="modal-footer">
