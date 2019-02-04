@@ -55,22 +55,7 @@
                             <li><a href="{{ route('admin.login') }}">Login</a></li>
                         @elseif ( Auth::user()->status === 'admin' )
                             <li><a href="{{ route('admin.home') }}">Home</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>Project<span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{ route('post.index.admin') }}">All Project</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{route('post.pro.admin')}}">Create Project</a>
-                                    </li>
-                                    <!-- <li>
-                                        <a href="">Calendar</a>
-                                    </li> -->
-                                </ul>
-                            </li>
+                            <li><a href="{{route('post.index.admin')}}">Project</a></li>
                             <li><a href="{{ route('post.notification.admin')}}">Notification</a></li>
                             <li><a href="{{ route('post.member.admin') }}">Member</a></li>
                             <li class="dropdown">
@@ -153,6 +138,26 @@
 
 //modal hapus task
         $('#hapustask').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var id = button.data('id') 
+          var modal = $(this)
+          modal.find('.modal-body #id').val(id);
+        })
+
+//modal edit projects
+        $('#editproject').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var id = button.data('id')
+          var title = button.data('title')
+          var content = button.data('content')
+          var modal = $(this)
+          modal.find('.modal-body #id').val(id);
+          modal.find('.modal-body #title').val(title);
+          modal.find('.modal-body #content').val(content);
+        })
+
+//modal hapus task
+        $('#hapusproject').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget)
           var id = button.data('id') 
           var modal = $(this)
