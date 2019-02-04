@@ -8,8 +8,8 @@ use App\Category;
 use App\User;
 use App\Task;
 use App\Pengaduan;
-use App\UserAndTask;
 use DB;
+use Calendar;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -25,8 +25,7 @@ class PostController extends Controller
     public function indexUser()
     {
         $posts = Post::latest()->paginate(3);
-
-        return view('post.indexUser', compact('posts'));
+        return view('post.indexUser', compact('posts','calendar_details'));
     }
 
     public function showtask()
@@ -36,9 +35,19 @@ class PostController extends Controller
         return view('post.showtask', compact('tasks'));
     }
     public function calendar(){
-        $posts = Post::all();
-
-        return view('post.calendar', compact('posts'));
+       $events = Task::get();
+        $event_list = [];
+        foreach ($events as $key => $event) {
+            $event_list[] = Calendar::event(
+                $event->judul_task,
+                true,
+                new \DateTime($event->tgl_mulai),
+                new \DateTime($event->deadline.' +1 day')
+            );
+        } 
+        $calendar_details = Calendar::addEvents($event_list); 
+ 
+        return view('post.calendar', compact('calendar_details') );
     }
 	public function notificationAdmin(){
 		$pengaduan = Pengaduan::orderBy('created_at', 'DESC')->get();
@@ -143,19 +152,18 @@ class PostController extends Controller
             'isi_task' => request('isi_task')
         ]);
 
-        return back()->with('success', 'Task Berhasil Ditambahkan');
+        return back()->with('alert', 'Task Berhasil Ditambahkan');
     }
 
     public function showAdmin(Post $post)
     {
-        $utask = UserAndTask::All();
         $tasks = Task::All();
         $users = User::All();
         // $tugas = DB::table('users')
         //     ->join('user_and_tasks', 'users.id', '=', 'user_and_tasks.user_id')
         //     ->join('tasks', 'tasks.id', '=', 'user_and_tasks.task_id')
-        //     ->select('users.name')
-        //     ->groupBy('tasks.id, users.id')
+        //     ->select('users.name','tasks.judul_task','tasks.deadline','tasks.post_id','tasks.isi_task','tasks.id','tasks.tgl_mulai')
+        //     ->groupBy('users.name','tasks.judul_task','tasks.deadline','tasks.post_id','tasks.isi_task','tasks.id','tasks.tgl_mulai')
         //     ->get();
             
     	return view('post.showAdmin', compact('post', 'project', 'tasks', 'users', 'tugas','utask'));
@@ -221,14 +229,14 @@ class PostController extends Controller
     {
     	$post->delete();
 
-    	return redirect()->route('post.index.admin')->with('danger', 'Post Berhasil Dihapus');
+    	return redirect()->route('post.index.admin')->with('success', 'Post Berhasil Dihapus');
     }
 
     public function destroy2Admin(User $post)
     {
         $post->delete();
 
-        return redirect()->route('post.member.admin')->with('danger', 'Post Berhasil Dihapus');
+        return redirect()->route('post.member.admin')->with('succes', 'Post Berhasil Dihapus');
     }
 
     public function storePengaduan()
@@ -258,4 +266,12 @@ class PostController extends Controller
 
         return redirect()->back(); 
     }
+
+    public function coba($id)
+    {
+       
+        $task = Task::find($id);
+        return view('post.coba')->withTask($task);
+    }
+
 }

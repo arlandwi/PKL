@@ -19,10 +19,10 @@
 									<br>
 			        				<div class="col-md-10 col-md-offset-1">
 
-						            	<sup>{{ $task->created_at->diffForHumans() }}</sup>
+						            	<sup></sup>
 						            	<div class="panel panel-default">
 							                <div class="panel-heading" style="background: #E5E5E5;">
-							                	<STRONG>{{ $task->judul_task }}</STRONG>  | {{str_limit($task->post->title,20,'...') }}
+							                	<STRONG>{{ $task->judul_task }}</STRONG>
 							                	 <div class="pull-right">
 							                	 &nbsp;
 							                	</div>
@@ -39,8 +39,10 @@
 						                			<button type="button" class="btn btn-xs btn-info" data-id="{{$task->id}}" data-toggle="modal" data-target="#userntaskModal" >Add User</button> &nbsp;
 						                		</div>
 						                		<div class="pull-right">
+						                			<form action="{{ route('coba', $task->id) }}">
 							                		{{ csrf_field() }}
-							                		<button type="button" class="btn btn-xs btn-success"  data-toggle="modal" data-target="#lihat">Lihat Detail</button>&nbsp;
+							                		<button type="submit" class="btn btn-xs btn-success">Lihat Detail</button>&nbsp; 
+							                		</form>
 							                	</div>
 							                </div>
 							                	
@@ -249,10 +251,10 @@
 						<table border="0" cellspacing="5" width="530">
 							<tr>
 								<td width="100">Nama Project</td>
-								<td width="15"> :</td>
-								<td> {{$task->post->title}}</td>
+								<td width="15"> : </td>
+								<td>{{$task->post->title}}</td>
 							</tr>							
-							<tr>
+							<tr> 
 								<td width="100">Nama Task</td>
 								<td width="15"> :</td>
 								<td>{{$task->judul_task}}</td>
@@ -260,22 +262,19 @@
 							<tr>
 								<td width="100">Dikerjakan</td>
 								<td width="15"> :</td>
-								<td>
-									   	@foreach($utask as $uta)
-									    	{{ $uta->user->name }}<strong></strong>,
-									    @endforeach
+								<td>@foreach($task->user as $us)
+										{{$us->name}},
+									@endforeach
 								</td>
 							</tr>
 							<tr>
 								<td width="100">Deadline</td>
 								<td width="15"> :</td>
-	                			<td>{{($task->deadline)}}</td>
+	                			<td></td>
 							</tr>
 								<td width="100">Keterangan</td>	
 								<td width="15"> :</td>							
-								<td>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ str_limit($task->isi_task, 100, '...') }}
-							    </td>
+								<td> </td>
 							</tr>
 						</table>
 						</center>

@@ -13,4 +13,13 @@ class Task extends Model
     	return $this->belongsTo(Post::class);
     }
 
+    public function userntask()
+    {
+    	return $this->hasMany(UserAndTask::class);
+    }
+
+    public function user()
+    {
+    	return $this->belongsToMany('App\User','task_user');
+    }
 }
