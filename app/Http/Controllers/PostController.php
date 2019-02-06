@@ -143,23 +143,37 @@ class PostController extends Controller
         return back()->with('success', 'Task Berhasil Ditambahkan');
     }
 
-    public function taskstoreAdmin()
+    public function taskstoreAdmin(Request $request)
     {
-        $this->validate(request(), [
+        $this->validate($request, array(
+            'post_id' => 'required',
             'judul_task' => 'required',
             'isi_task' => 'required|min:10',
             'tgl_mulai' => 'required',
             'deadline' => 'required'
-        ]);
+        ));
 
-        Task::create([
-            'post_id' => request('post_id'),
-            'judul_task' => request('judul_task'),
-            'tgl_mulai' => request('tgl_mulai'),
-            'deadline' => request('deadline'),
-            'slug' => str_slug(request('judul_task')),
-            'isi_task' => request('isi_task')
-        ]);
+        // Task::create([
+        //     'post_id' => request('post_id'),
+        //     'judul_task' => request('judul_task'),
+        //     'tgl_mulai' => request('tgl_mulai'),
+        //     'deadline' => request('deadline'),
+        //     'slug' => str_slug(request('judul_task')),
+        //     'isi_task' => request('isi_task')
+        // ]);
+
+        $task = new Task;
+
+        $task->post_id = $request->post_id;
+        $task->judul_task = $request->judul_task;
+        $task->tgl_mulai = $request->tgl_mulai;
+        $task->deadline = $request->deadline;
+        $task->slug = str_slug($request->judul_task);
+        $task->isi_task = $request->isi_task;
+
+        $task->save();
+
+        $task->user()->sync($request->users, false);
 
         return back()->with('alert', 'Task Berhasil Ditambahkan');
     }
@@ -299,9 +313,9 @@ class PostController extends Controller
 
     public function coba($id)
     {
-       
+        $users = User::All();
         $task = Task::find($id);
-        return view('post.coba')->withTask($task);
+        return view('post.coba', compact ('task','users'));
     }
 
 }

@@ -32,17 +32,11 @@
 							                	</div>
 							                	<div class="pull-right">
 						                			{{ csrf_field() }}
-						                			<button type="button" class="btn btn-xs btn-warning" data-id="{{$task->id}}" data-judul="{{$task->judul_task}}" data-mulai="{{$task->tgl_mulai}}" data-deadline="{{$task->deadline}}" data-isi="{{$task->isi_task}}" data-toggle="modal" data-target="#edittask" >Edit</button> &nbsp;
-						                		</div>
-												<div class="pull-right">
-						                			{{ csrf_field() }}
-						                			<button type="button" class="btn btn-xs btn-info" data-id="{{$task->id}}" data-toggle="modal" data-target="#userntaskModal" >Add User</button> &nbsp;
+						                			<button type="button" class="btn btn-xs btn-warning" data-id="{{$task->id}}" data-judul="{{$task->judul_task}}" data-mulai="{{$task->tgl_mulai}}" data-deadline="{{$task->deadline}}" data-isi="{{$task->isi_task}}" data-toggle="modal" data-target="#edittask" >&nbsp;Edit&nbsp;</button>&nbsp;
 						                		</div>
 						                		<div class="pull-right">
-						                			<form action="{{ route('coba', $task->id) }}">
 							                		{{ csrf_field() }}
-							                		<button type="submit" class="btn btn-xs btn-success">Lihat Detail</button>&nbsp; 
-							                		</form>
+							                		<button type="submit" data-id="@foreach ($task->user as $all){{ $all->name }}, @endforeach" data-toggle="modal" data-target="#lihat" class="btn btn-xs btn-success" >Lihat Detail</button>&nbsp;
 							                	</div>
 							                </div>
 							                	
@@ -99,45 +93,6 @@
 		</div>
 	</div>
 
-<!-- Modal Tambah User di Task-->
-	<div class="modal fade" id="userntaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel">Penugasan User dan Task</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					    <span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					      
-	<!--Form Dalam Modal -->
-					<form role="form" action="{{route('post.tasknuser.admin')}}" enctype="multipart/form-data" method="post">{{csrf_field()}}
-						<div class="box-body">
-							<div class="form-group">
-								<input type="hidden" name="task_id" id="task_id" class="form-control" value="{{$task->id}}">
-							</div>
-							<div class="form-group">
-								<label for="input_nama">Pilih User</label>
-								<select name="user_id" id="user_id" class="form-control">
-									@foreach ($users as $user)
-										<option value="{{ $user->id }}">{{ $user->name }}</option>
-									@endforeach
-								</select>
-							</div>	
-							<div class="box-footer">
-								<button type="submit" class="btn btn-primary">Save</button>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
 <!-- Modal Tambah Task -->
 	<div class="modal fade" id="TaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -167,6 +122,14 @@
 							<div class="form-group">
 								<label for="input_deadline">Batas Pengerjaan</label>
 								<input type="date" name="deadline" id="deadline" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="input_user">Pilih User</label>
+								<select class="form-control select2-multi" name="users[]" multiple="multiple">
+									@foreach($users as $user)
+										<option value='{{ $user->id }}'>{{ $user->name }}</option>
+									@endforeach
+								</select>
 							</div>	
 							<div class="form-group">
 								<label for="input_isitask">Isi Task</label>
@@ -242,23 +205,6 @@
 					</button>
 				</div>
 
-<<<<<<< HEAD
-				<div class="modal-body">	      
-					<div class="panel-body" style="background: #E5E5E5;">
-						@if($tasks->isEmpty())
-						 <p>haha</p>
-						@else
-						<p>Dikerjakan : 
-						    @foreach($utask as $uta)
-						    	{{ $uta->user->name }}<strong></strong>,
-						    @endforeach
-						</p>
-						<!-- <p>Dikerjakan : <strong></strong></p>  -->
-	                	<p>Batas Pengerjaan : {{($task->deadline)}}<strong></strong></p>
-						<p>Keterangan :</p>
-						<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							                		{{ str_limit($task->isi_task, 100, '...') }}</p>
-=======
 				<div class="modal-body" >	      
 					<div class="panel-body" >
 						@if($tasks->isEmpty())
@@ -279,23 +225,20 @@
 							<tr>
 								<td width="100">Dikerjakan</td>
 								<td width="15"> :</td>
-								<td>@foreach($task->user as $us)
-										{{$us->name}},
-									@endforeach
+								<td><input type="text" style="border-style: none;" name="id" id="id" value="" readonly="">
 								</td>
 							</tr>
 							<tr>
 								<td width="100">Deadline</td>
 								<td width="15"> :</td>
-	                			<td></td>
+	                			<td>{{$task->deadline}}</td>
 							</tr>
 								<td width="100">Keterangan</td>	
 								<td width="15"> :</td>							
-								<td> </td>
+								<td>{{$task->isi_task}}</td>
 							</tr>
 						</table>
 						</center>
->>>>>>> 18dd78a73fd06519dc2816d0f81ac38b061c1fae
 						@endif
 					</div>
 				</div>
