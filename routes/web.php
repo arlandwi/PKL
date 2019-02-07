@@ -127,4 +127,4 @@ Route::group(['prefix'=>'user'], function(){
 
 	Route::get('/taskshow','PostController@showtask')->name('post.showtask')->middleware('auth');
 
-
+	Route::get('/tes/{id}','PostController@coba')->name('coba');

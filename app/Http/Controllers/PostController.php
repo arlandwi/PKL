@@ -8,8 +8,8 @@ use App\Category;
 use App\User;
 use App\Task;
 use App\Pengaduan;
-use App\UserAndTask;
 use DB;
+use Calendar;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -37,8 +37,7 @@ class PostController extends Controller
     public function indexUser()
     {
         $posts = Post::latest()->paginate(3);
-
-        return view('post.indexUser', compact('posts'));
+        return view('post.indexUser', compact('posts','calendar_details'));
     }
 
     public function showtask()
@@ -48,9 +47,19 @@ class PostController extends Controller
         return view('post.showtask', compact('tasks'));
     }
     public function calendar(){
-        $posts = Post::all();
-
-        return view('post.calendar', compact('posts'));
+       $events = Task::get();
+        $event_list = [];
+        foreach ($events as $key => $event) {
+            $event_list[] = Calendar::event(
+                $event->judul_task,
+                true,
+                new \DateTime($event->tgl_mulai),
+                new \DateTime($event->deadline.' +1 day')
+            );
+        } 
+        $calendar_details = Calendar::addEvents($event_list); 
+ 
+        return view('post.calendar', compact('calendar_details') );
     }
 	public function notificationAdmin(Request $request){
         if ($request->input('filter') === null) {
@@ -171,37 +180,50 @@ class PostController extends Controller
         return back()->with('success', 'Task Berhasil Ditambahkan');
     }
 
-    public function taskstoreAdmin()
+    public function taskstoreAdmin(Request $request)
     {
-        $this->validate(request(), [
+        $this->validate($request, array(
+            'post_id' => 'required',
             'judul_task' => 'required',
             'isi_task' => 'required|min:10',
             'tgl_mulai' => 'required',
             'deadline' => 'required'
-        ]);
+        ));
 
-        Task::create([
-            'post_id' => request('post_id'),
-            'judul_task' => request('judul_task'),
-            'tgl_mulai' => request('tgl_mulai'),
-            'deadline' => request('deadline'),
-            'slug' => str_slug(request('judul_task')),
-            'isi_task' => request('isi_task')
-        ]);
+        // Task::create([
+        //     'post_id' => request('post_id'),
+        //     'judul_task' => request('judul_task'),
+        //     'tgl_mulai' => request('tgl_mulai'),
+        //     'deadline' => request('deadline'),
+        //     'slug' => str_slug(request('judul_task')),
+        //     'isi_task' => request('isi_task')
+        // ]);
 
-        return back()->with('success', 'Task Berhasil Ditambahkan');
+        $task = new Task;
+
+        $task->post_id = $request->post_id;
+        $task->judul_task = $request->judul_task;
+        $task->tgl_mulai = $request->tgl_mulai;
+        $task->deadline = $request->deadline;
+        $task->slug = str_slug($request->judul_task);
+        $task->isi_task = $request->isi_task;
+
+        $task->save();
+
+        $task->user()->sync($request->users, false);
+
+        return back()->with('alert', 'Task Berhasil Ditambahkan');
     }
 
     public function showAdmin(Post $post)
     {
-        $utask = UserAndTask::All();
         $tasks = Task::All();
         $users = User::All();
         // $tugas = DB::table('users')
         //     ->join('user_and_tasks', 'users.id', '=', 'user_and_tasks.user_id')
         //     ->join('tasks', 'tasks.id', '=', 'user_and_tasks.task_id')
-        //     ->select('users.name')
-        //     ->groupBy('tasks.id, users.id')
+        //     ->select('users.name','tasks.judul_task','tasks.deadline','tasks.post_id','tasks.isi_task','tasks.id','tasks.tgl_mulai')
+        //     ->groupBy('users.name','tasks.judul_task','tasks.deadline','tasks.post_id','tasks.isi_task','tasks.id','tasks.tgl_mulai')
         //     ->get();
             
     	return view('post.showAdmin', compact('post', 'project', 'tasks', 'users', 'tugas','utask'));
@@ -267,14 +289,14 @@ class PostController extends Controller
     {
     	$post->delete();
 
-    	return redirect()->route('post.index.admin')->with('danger', 'Post Berhasil Dihapus');
+    	return redirect()->route('post.index.admin')->with('success', 'Post Berhasil Dihapus');
     }
 
     public function destroy2Admin(User $post)
     {
         $post->delete();
 
-        return redirect()->route('post.member.admin')->with('danger', 'Post Berhasil Dihapus');
+        return redirect()->route('post.member.admin')->with('succes', 'Post Berhasil Dihapus');
     }
 
     public function storePengaduan()
@@ -327,6 +349,7 @@ class PostController extends Controller
         return back()->with('success', 'Project berhasil dibuat');
     }
 
+
      public function destroyNotifAdmin(Request $request)
     {
         $destroy = DB::table('pengaduans')->select('id')->where('id', $request->input('id'));
@@ -339,6 +362,6 @@ class PostController extends Controller
       $updatee = \DB::table('pengaduans')->select('id')->where('id', $request->input('id'));
       $updatee->update(['status' => $request->input('status1')]);
       return back()->with('success', 'Status Berhasi Di Ubah');
-    }
+
 
 }

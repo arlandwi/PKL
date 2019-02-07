@@ -12,6 +12,11 @@
     <title>DISKOMINFO SITUBONDO</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/parsley.min.css') }}">
+
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" integrity="sha384-PmY9l28YgO4JwMKbTvgaS7XNZJ30MK9FAZjjzXtlqyZCqBY6X6bXIkM++IkyinN+" crossorigin="anonymous">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap-theme.min.css" integrity="sha384-jzngWsPS6op3fgRCDTESqrEJwRKck+CILhJVO5VvaAZCq8JYf8HsR/HPpBOOPZfR" crossorigin="anonymous">
@@ -98,6 +103,12 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/parsley.min.js') }}"></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+
+     <script type="text/javascript">
+        $('.select2-multi').select2();
+      </script>
 
     <script>
         $('#myModal').on('show.bs.modal', function (event) {
@@ -168,9 +179,14 @@
         $('#hapusnotif').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget)
           var id = button.data('id') 
+
+        $('#lihat').on('show.bs.modal', function (event){
+          var button = $(event.relatedTarget)
+          var id = button.data('id')
           var modal = $(this)
           modal.find('.modal-body #id').val(id);
         })
+
 
 //modal ubah status
         $('#ubahstatus').on('show.bs.modal', function (event) {

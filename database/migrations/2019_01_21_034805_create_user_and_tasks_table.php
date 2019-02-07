@@ -13,7 +13,7 @@ class CreateUserAndTasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_and_tasks', function (Blueprint $table) {
+        Schema::create('task_user', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('task_id')->unsigned();
