@@ -156,12 +156,41 @@
           modal.find('.modal-body #content').val(content);
         })
 
-//modal hapus task
+//modal hapus project
         $('#hapusproject').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget)
           var id = button.data('id') 
           var modal = $(this)
           modal.find('.modal-body #id').val(id);
+        })
+
+//modal hapus notif
+        $('#hapusnotif').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var id = button.data('id') 
+          var modal = $(this)
+          modal.find('.modal-body #id').val(id);
+        })
+
+//modal ubah status
+        $('#ubahstatus').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var id = button.data('id') 
+          var status = button.data('status')  
+          var modal = $(this)
+          if (status === "Belum Di Proses") {
+            modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #status').val(status);    
+            modal.find('.modal-body #status1').val("Sedang Di Proses");  
+          }else if (status === "Sedang Di Proses"){
+            modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #status').val(status);    
+            modal.find('.modal-body #status1').val("Selesai");  
+          }
+              
+            
+          
+          
         })
 
     </script>

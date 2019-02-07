@@ -34,6 +34,9 @@
                   <textarea class="form-control" rows="10" placeholder="Masukkan Pengaduan" id="isi" name="isi">
                   </textarea>
                 </div>
+                <div class="form-group">
+                  <input type="hidden" id="status" name="status" class="form-control" value="Belum Di Proses">
+                </div>
                 <button class="btn-primary" type="submit">Kirim Pengaduan</button>
                 
               </form>

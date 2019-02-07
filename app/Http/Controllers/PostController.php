@@ -15,12 +15,23 @@ use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
     
-	public function indexAdmin()
+	public function indexAdmin(Request $request)
 	{
-		$posts = Post::latest()->paginate(3);
         $categories = Category::all();
 
-		return view('post.indexAdmin', compact('posts','categories'));
+        if ($request->input('filter') === null) {
+            $posts = Post::all();
+            $fill = "";          
+        }
+        elseif ($request->input('filter') === 'Terbaru') {
+            $posts = Post::orderBy('created_at', 'DESC')->get();
+            $fill = "Sort By Terbaru";
+        }elseif ($request->input('filter') === 'Terlama') {
+            $posts = Post::orderBy('created_at', 'ASC')->get();
+            $fill = "Sort By Terlama";
+        }
+
+		return view('post.indexAdmin', compact('posts','categories','fill'));
 	}
 
     public function indexUser()
@@ -41,11 +52,37 @@ class PostController extends Controller
 
         return view('post.calendar', compact('posts'));
     }
-	public function notificationAdmin(){
-		$pengaduan = Pengaduan::orderBy('created_at', 'DESC')->get();
-
-		return view('post.notification', compact('pengaduan'));
+	public function notificationAdmin(Request $request){
+        if ($request->input('filter') === null) {
+            $pengaduan = Pengaduan::all();
+            $fill = "";          
+        }
+        elseif ($request->input('filter') === 'Terbaru') {
+            $pengaduan = Pengaduan::orderBy('created_at', 'DESC')->get();
+            $fill = "Sort By Terbaru";
+        }elseif ($request->input('filter') === 'Terlama') {
+            $pengaduan = Pengaduan::orderBy('created_at', 'ASC')->get();
+            $fill = "Sort By Terlama";
+        }elseif ($request->input('filter') === 'Belum Di Proses') {
+            $pengaduan = Pengaduan::where('status', 'Belum Di Proses')->orderBy('status', 'Belum Di Proses')->get();
+            $fill = "Sort By Belum Di Proses";
+        }elseif ($request->input('filter') === 'Sedang Di Proses') {
+            $pengaduan = Pengaduan::where('status', 'Sedang Di Proses')->orderBy('created_at', 'DESC')->get();
+            $fill = "Sort By Sedang Di Proses";
+        }else{
+            $pengaduan = Pengaduan::where('status', 'Selesai')->orderBy('created_at', 'DESC')->get();
+            $fill = "Sort By Selesai";
+        }
+        return view('post.notification', compact('pengaduan','fill'));
 	}
+    
+
+    public function notificationSkpd(){
+        $pengaduan = Pengaduan::orderBy('created_at', 'DESC')->get();
+
+        return view('post.notificationSkpd', compact('pengaduan'));
+    }
+
     public function memberAdmin(){
         $posts = User::latest()->paginate(3);
 
@@ -254,7 +291,8 @@ class PostController extends Controller
             'skpd_id' => $skpd,
             'subject' => request('subject'),
             'lokasi' => request('lokasi'),
-            'isi' => request('isi')
+            'isi' => request('isi'),
+            'status' => request('status')
         ]);
 
         return back()->with('success', 'Pengaduan berhasil dikirim');
@@ -288,4 +326,19 @@ class PostController extends Controller
 
         return back()->with('success', 'Project berhasil dibuat');
     }
+
+     public function destroyNotifAdmin(Request $request)
+    {
+        $destroy = DB::table('pengaduans')->select('id')->where('id', $request->input('id'));
+        $destroy->delete();
+
+        return redirect()->back()->with('success', 'Notifikasi Berhasil Dihapus'); 
+    }
+
+    public function updateStatusAdmin(Request $request){
+      $updatee = \DB::table('pengaduans')->select('id')->where('id', $request->input('id'));
+      $updatee->update(['status' => $request->input('status1')]);
+      return back()->with('success', 'Status Berhasi Di Ubah');
+    }
+
 }

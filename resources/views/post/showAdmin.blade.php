@@ -239,24 +239,7 @@
 					    <span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-
-<<<<<<< HEAD
-				<div class="modal-body">	      
-					<div class="panel-body" style="background: #E5E5E5;">
-						@if($tasks->isEmpty())
-						 <p>haha</p>
-						@else
-						<p>Dikerjakan : 
-						    @foreach($utask as $uta)
-						    	{{ $uta->user->name }}<strong></strong>,
-						    @endforeach
-						</p>
-						<!-- <p>Dikerjakan : <strong></strong></p>  -->
-	                	<p>Batas Pengerjaan : {{($task->deadline)}}<strong></strong></p>
-						<p>Keterangan :</p>
-						<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							                		{{ str_limit($task->isi_task, 100, '...') }}</p>
-=======
+				
 				<div class="modal-body" >	      
 					<div class="panel-body" >
 						@if($tasks->isEmpty())
@@ -296,7 +279,7 @@
 							</tr>
 						</table>
 						</center>
->>>>>>> 18dd78a73fd06519dc2816d0f81ac38b061c1fae
+
 						@endif
 					</div>
 				</div>
@@ -371,6 +354,8 @@
         </div>
       </div>
     </footer>
+
+
       
     <!-- Akhir footer -->
 @endsection

@@ -37,6 +37,7 @@ Route::group(['prefix'=>'admin'], function(){
 
 	//all project
 	Route::get('/post','PostController@indexAdmin')->name('post.index.admin')->middleware('auth:admin');
+	Route::post('/post','PostController@indexAdmin')->name('post.indexfill.admin')->middleware('auth:admin');
 	Route::get('/post/{post}/edit','PostController@editAdmin')->name('post.edit.admin')->middleware('auth:admin');
 	Route::get('/post/{post}','PostController@showAdmin')->name('post.show.admin')->middleware('auth:admin');
 	Route::patch('/post/{post}/edit','PostController@updateAdmin')->name('post.update.admin')->middleware('auth:admin');
@@ -64,6 +65,10 @@ Route::group(['prefix'=>'admin'], function(){
 
 	//notification
 	Route::get('/notification','PostController@notificationAdmin')->name('post.notification.admin')->middleware('auth:admin');
+	Route::post('/notification/filter','PostController@notificationAdmin')->name('post.notificationfil.admin')->middleware('auth:admin');
+	Route::post('/notification/destroy','PostController@destroyNotifAdmin')->name('post.notif.destroy.admin')->middleware('auth:admin');
+	Route::post('/notification/update','PostController@updateStatusAdmin')->name('post.status.update.admin')->middleware('auth:admin');
+
 
 
 });
@@ -109,9 +114,12 @@ Route::group(['prefix'=>'user'], function(){
 		Route::get('/register', 'AuthSkpd\RegisterController@showRegistrationForm')->name('skpd.register');
 		Route::post('/register', 'AuthSkpd\RegisterController@register')->name('skpd.register.submit');
 
+		//pengaduan
 		Route::get('/pengaduan', 'SkpdController@pengaduan')->name('pengaduan')->middleware('auth:skpd');
 		Route::post('/postPengaduan', 'PostController@storePengaduan')->name('pengaduan.submit')->middleware('auth:skpd');
 		Route::post('/postMail', 'MailController@post')->name('postmail')->middleware('auth:skpd');
+		Route::get('/pengaduan/list', 'PostController@notificationSkpd')->name('pengaduan.list')->middleware('auth:skpd');
+
 
 	});
 	

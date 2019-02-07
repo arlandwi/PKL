@@ -11,6 +11,7 @@ class Pengaduan extends Model
 		'lokasi',
 		'isi',
 		'skpd_id',
+		'status',
 	];
 
 	public function skpd()

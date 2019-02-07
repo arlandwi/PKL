@@ -20,6 +20,7 @@ class CreatePengaduansTable extends Migration
             $table->string('isi');
             $table->integer('skpd_id')->unsigned();
             $table->timestamps();
+            $table->string('status');
 
             $table->foreign('skpd_id')->references('id')->on('skpds')->onDelete('CASCADE');
         });

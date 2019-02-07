@@ -7,6 +7,15 @@
             <div class="col-sm-12 text-center">
               <h2>All Project</h2>
               <hr>
+              <form action="{{route('post.indexfill.admin')}}" method="post">
+              	{{csrf_field()}}
+              	<select name="filter" id="filter">
+              		<option value="Terbaru">Terbaru</option>
+              		<option value="Terlama">Terlama</option>
+              	</select>
+              	<button class="btn btn-xs btn-info" type="submit">Filter</button>
+              </form>
+              <p>{{$fill}}</p>
             </div> 
           </div>
           <div class="row">
@@ -38,7 +47,7 @@
 	            	</div>
 	            @endforeach
 
-	            {!! $posts->render() !!}
+	            
 		    </div>
 		</div>
 			</div>
