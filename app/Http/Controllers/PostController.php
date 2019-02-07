@@ -362,6 +362,6 @@ class PostController extends Controller
       $updatee = \DB::table('pengaduans')->select('id')->where('id', $request->input('id'));
       $updatee->update(['status' => $request->input('status1')]);
       return back()->with('success', 'Status Berhasi Di Ubah');
-
+     } 
 
 }
