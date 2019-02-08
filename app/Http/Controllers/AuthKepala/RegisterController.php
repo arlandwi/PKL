@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\AuthSkpd;
+namespace App\Http\Controllers\AuthKepala;
 
-use App\Skpd;
+use App\Kepala;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
-use Illuminate\Auth\Events\Registeredskpd;
+use Illuminate\Auth\Events\Registeredkepala;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
@@ -44,7 +44,7 @@ class RegisterController extends Controller
 
      public function showRegistrationForm()
     {
-        return view('authSkpd.register');
+        return view('authKepala.register');
     }
     /**
      * Get a validator for an incoming registration request.
@@ -71,7 +71,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return Skpd::create([
+        return Kepala::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'status' => $data['status'],
@@ -82,7 +82,7 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
-        event(new Registeredskpd($skpd = $this->create($request->all())));
+        event(new Registeredkepala($kepala = $this->create($request->all())));
 
         // $this->guard('skpd')->login($skpd);
 
@@ -94,9 +94,9 @@ class RegisterController extends Controller
         ];
 
         //Attempt to log the user in
-        if (Auth::guard('skpd')->attempt($credential, $request->member)) {
+        if (Auth::guard('kepala')->attempt($credential, $request->member)) {
             // if login succesful, then redirect to their intended location
-            return redirect()->intended(route('skpd.home'));
+            return redirect()->intended(route('kepala.home'));
         }
     }
 

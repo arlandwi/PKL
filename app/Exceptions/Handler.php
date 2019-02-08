@@ -68,7 +68,11 @@ class Handler extends ExceptionHandler
 
             case 'skpd':
                 $login = 'skpd.login';
-                break;    
+                break;
+
+             case 'kepala':
+                $login = 'kepala.login';
+                break;       
             
             default:
                 $login = 'login';

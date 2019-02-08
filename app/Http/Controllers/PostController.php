@@ -8,6 +8,8 @@ use App\Category;
 use App\User;
 use App\Task;
 use App\Pengaduan;
+use App\Skpd;
+use App\kepala;
 use DB;
 use Calendar;
 use Illuminate\Support\Facades\Auth;
@@ -94,8 +96,9 @@ class PostController extends Controller
 
     public function memberAdmin(){
         $posts = User::latest()->paginate(3);
-
-        return view('post.memberAdmin', compact('posts'));
+        $skpds = Skpd::latest()->paginate(3);
+        $kepalas = Kepala::latest()->paginate(3);
+        return view('post.memberAdmin', compact('posts','skpds','kepalas'));
     }
 	public function portfolio(){
 		$posts = Post::latest()->paginate(3);
@@ -104,6 +107,11 @@ class PostController extends Controller
     public function profilAdmin(){
         $ulog = Auth::user();
         return view('post.profilAdmin', compact('ulog'));
+    }
+
+     public function profilSkpd(){
+        $ulog = Auth::user();
+        return view('post.profilSkpd', compact('ulog'));
     }
 
     public function profilUser(){
@@ -117,6 +125,14 @@ class PostController extends Controller
       $updatee->update(['email' => $request->input('email')]);
       return back()->with('success', 'Profil Berhasil Diubah');
     }
+
+    public function updatememAdmin(Request $request){
+      $updatee = \DB::table('users')->select('id')->where('id', $request->input('id'));
+      $updatee->update(['name' => $request->input('name')]);
+      $updatee->update(['email' => $request->input('email')]);
+      return back()->with('success', 'Data Member Berhasil Diedit');
+    }
+
 
      public function updateproUser(Request $request){
       $updatee = \DB::table('admins')->select('id')->where('id', $request->input('id'));
@@ -239,6 +255,16 @@ class PostController extends Controller
         return view('post.show2Admin', compact('post'));
     }
 
+    public function show3Admin(Skpd $skpd)
+    {
+        return view('post.show3Admin', compact('skpd'));
+    }
+
+    public function show4Admin(Kepala $kepala)
+    {
+        return view('post.show4Admin', compact('kepala'));
+    }
+
     public function taskAdmin(Post $post)
     {
         $users = User::all();
@@ -358,10 +384,49 @@ class PostController extends Controller
         return redirect()->back()->with('success', 'Notifikasi Berhasil Dihapus'); 
     }
 
+    public function destroymemAdmin(Request $request)
+    {
+        $destroy = DB::table('users')->select('id')->where('id', $request->input('id'));
+        $destroy->delete();
+
+        return redirect()->back()->with('success', 'Member Berhasil Dihapus'); 
+    }
+
     public function updateStatusAdmin(Request $request){
       $updatee = \DB::table('pengaduans')->select('id')->where('id', $request->input('id'));
       $updatee->update(['status' => $request->input('status1')]);
       return back()->with('success', 'Status Berhasi Di Ubah');
      } 
+
+      public function destroyskpdAdmin(Request $request)
+    {
+        $destroy = DB::table('skpds')->select('id')->where('id', $request->input('id'));
+        $destroy->delete();
+
+        return redirect()->back()->with('success', 'SKPD Berhasil Dihapus'); 
+    }
+
+    public function updateskpdAdmin(Request $request){
+      $updatee = \DB::table('skpds')->select('id')->where('id', $request->input('id'));
+       $updatee->update(['name' => $request->input('name')]);
+      $updatee->update(['email' => $request->input('email')]);
+      return back()->with('success', 'SKPD Berhasi Di Edit');
+     } 
+
+      public function destroykepalaAdmin(Request $request)
+    {
+        $destroy = DB::table('kepalas')->select('id')->where('id', $request->input('id'));
+        $destroy->delete();
+
+        return redirect()->back()->with('success', 'Kepala Berhasil Dihapus'); 
+    }
+
+    public function updatekepalaAdmin(Request $request){
+      $updatee = \DB::table('kepalas')->select('id')->where('id', $request->input('id'));
+       $updatee->update(['name' => $request->input('name')]);
+      $updatee->update(['email' => $request->input('email')]);
+      return back()->with('success', 'Kepala Berhasi Di Edit');
+     } 
+ 
 
 }

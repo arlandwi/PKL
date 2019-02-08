@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appkepala')
 
 @section('content')
 <style>
@@ -12,7 +12,8 @@
       <img src="img/diskominfo.png" class="img-circle">
       <h3>DINAS KOMUNIKASI INFORMATIKA DAN PERSANDIAN</h3>
       <h3>KABUPATEN SITUBONDO</h3>
-      <p>Aplikasi Laporan Managemen Proyek</p>
+      <p>Aplikasi Laporan Managemen Proyek </p>
+      <h4>Halaman Kepala </h4>
     </div>
     <!-- akhir jumbotron -->
 
@@ -47,7 +48,45 @@
       </section>
     <!-- akhir about -->
 
-    
+    <!-- contact -->
+      <!-- <section class="contact" id="contact">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 text-center">
+              <h2>Masukan Pengguna</h2>
+              <hr>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+              <form action="{{route('postmail')}}" method="post">
+                {{csrf_field()}}
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" id="name" name="name" class="form-control" placeholder="Masukkan Nama">
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" class="form-control" placeholder="Masukkan Email">
+                </div>
+                <select class="form-control" id="subject" name="subject">
+                  <option>-- Pilih Kategori</option>
+                  <option>About Diskominfo</option>
+                  <option>Kritik Saran</option>
+                </select>
+                <div class="form-group">
+                  <label for="pesan">Message</label>
+                  <textarea class="form-control" rows="10" placeholder="Masukkan Pesan" id="message" name="message"></textarea>
+                </div>
+                <button class="btn-primary" type="submit">Kirim Pesan</button>
+                
+              </form>
+            </div>
+          </div>
+        </div>
+      </section> -->
+   <!-- akhir contact -->
+
     <!-- footer -->
     <footer>
       <div class="container text-center">

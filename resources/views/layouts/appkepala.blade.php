@@ -51,20 +51,10 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @guest
-                             <li><a href="{{ route('skpd.login') }}">Login</a></li>
-                        @elseif ( Auth::user()->status === 'skpd')
-                            <li><a href="{{route('skpd.home')}}">Home</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>Pengaduan <span class="caret"></span></a> 
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{route('pengaduan')}}">Buat Pengaduan</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{route('pengaduan.list')}}">List Pengaduan Anda</a>
-                                    </li>
-                                </ul>
-                            </li>
+                             <li><a href="">Login</a></li>
+                        @elseif ( Auth::user()->status === 'kepala')
+                            <li><a href="">Home</a></li>
+                            <li><a href="">Project</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -72,7 +62,7 @@
 
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="{{route('post.profil.skpd')}}">Edit Profile</a>
+                                        <a href="">Edit Profile</a>
                                     </li>
                                     <li>
                                         <a href=""
@@ -81,14 +71,14 @@
                                             Logout
                                         </a>
 
-                                        <form id="logout-form" action="{{ route('skpd.logout') }}" method="GET" style="display: none;">
+                                        <form id="logout-form" action="{{ route('kepala.logout') }}" method="GET" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
                                 </ul>
                             </li>
                         @else
-                            <li><a href="{{ route('skpd.login') }}">Login</a></li>
+                            <li><a href="{{ route('kepala.login') }}">Login</a></li>
                         @endguest
                     </ul>
                 </div>
