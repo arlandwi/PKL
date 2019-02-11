@@ -51,10 +51,10 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @guest
-                             <li><a href="">Login</a></li>
+                             <li><a href="{{route('kepala.login')}}">Login</a></li>
                         @elseif ( Auth::user()->status === 'kepala')
-                            <li><a href="">Home</a></li>
-                            <li><a href="">Project</a></li>
+                            <li><a href="{{route('kepala.home')}}">Home</a></li>
+                            <li><a href="{{route('post.index.kepala')}}">Project</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -62,7 +62,7 @@
 
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="">Edit Profile</a>
+                                        <a href="{{route('post.profil.kepala')}}">Edit Profile</a>
                                     </li>
                                     <li>
                                         <a href=""

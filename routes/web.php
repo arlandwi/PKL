@@ -153,6 +153,15 @@ Route::group(['prefix'=>'user'], function(){
 		Route::get('/register', 'AuthKepala\RegisterController@showRegistrationForm')->name('kepala.register');
 		Route::post('/register', 'AuthKepala\RegisterController@register')->name('kepala.register.submit');
 
+		//profil
+		Route::get('/profil','PostController@profilKepala')->name('post.profil.kepala')->middleware('auth:kepala');
+		Route::post('profil/edit','PostController@updatekepalaAdmin')->name('post.edit.kepala')->middleware('auth:kepala');	
+
+		//project
+		Route::get('/post','PostController@indexKepala')->name('post.index.kepala')->middleware('auth:kepala');
+		Route::post('/post','PostController@indexKepala')->name('post.indexfill.kepala')->middleware('auth:kepala');	
+
+
 	});
 
 

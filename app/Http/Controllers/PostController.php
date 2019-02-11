@@ -36,6 +36,25 @@ class PostController extends Controller
 		return view('post.indexAdmin', compact('posts','categories','fill'));
 	}
 
+    public function indexKepala(Request $request)
+    {
+        $categories = Category::all();
+
+        if ($request->input('filter') === null) {
+            $posts = Post::all();
+            $fill = "";          
+        }
+        elseif ($request->input('filter') === 'Terbaru') {
+            $posts = Post::orderBy('created_at', 'DESC')->get();
+            $fill = "Sort By Terbaru";
+        }elseif ($request->input('filter') === 'Terlama') {
+            $posts = Post::orderBy('created_at', 'ASC')->get();
+            $fill = "Sort By Terlama";
+        }
+
+        return view('post.indexKepala', compact('posts','categories','fill'));
+    }
+
     public function indexUser()
     {
         $posts = Post::latest()->paginate(3);
@@ -117,6 +136,11 @@ class PostController extends Controller
     public function profilUser(){
         $ulog = Auth::user();
         return view('post.profilUser', compact('ulog'));
+    }
+
+    public function profilKepala(){
+        $ulog = Auth::user();
+        return view('post.profilKepala', compact('ulog'));
     }
 
     public function updateproAdmin(Request $request){
