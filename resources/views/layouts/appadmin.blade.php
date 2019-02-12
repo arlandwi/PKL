@@ -187,8 +187,16 @@
         $('#lihat').on('show.bs.modal', function (event){
           var button = $(event.relatedTarget)
           var id = button.data('id')
+          var project = button.data('project')
+          var judul = button.data('judul')
+          var deadline = button.data('deadline')
+          var isi = button.data('isi')
           var modal = $(this)
           modal.find('.modal-body #id').val(id);
+          modal.find('.modal-body #project').val(project);
+          modal.find('.modal-body #judul').val(judul);
+          modal.find('.modal-body #deadline').val(deadline);
+          modal.find('.modal-body #isi').val(isi);
         })
 
 

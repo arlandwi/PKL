@@ -217,16 +217,9 @@ class PostController extends Controller
 
     public function showAdmin(Post $post)
     {
-        $tasks = Task::All();
+        $tasks = Task::latest()->paginate(3);
         $users = User::All();
-        // $tugas = DB::table('users')
-        //     ->join('user_and_tasks', 'users.id', '=', 'user_and_tasks.user_id')
-        //     ->join('tasks', 'tasks.id', '=', 'user_and_tasks.task_id')
-        //     ->select('users.name','tasks.judul_task','tasks.deadline','tasks.post_id','tasks.isi_task','tasks.id','tasks.tgl_mulai')
-        //     ->groupBy('users.name','tasks.judul_task','tasks.deadline','tasks.post_id','tasks.isi_task','tasks.id','tasks.tgl_mulai')
-        //     ->get();
-            
-    	return view('post.showAdmin', compact('post', 'project', 'tasks', 'users', 'tugas','utask'));
+    	return view('post.showAdmin', compact('post', 'tasks', 'users'));
     }
 
      public function showUser(Post $post)
@@ -364,4 +357,22 @@ class PostController extends Controller
       return back()->with('success', 'Status Berhasi Di Ubah');
      } 
 
+     public function notifuser()
+     {
+        $users = User::All()->where('id', Auth::user()->id);
+        return view('post.notificationUser', compact('users'));
+     }
+
+     public function editTask($id)
+     {
+        $task = Task::find($id);
+
+        $users = User::all();
+        $user = array();
+        foreach ($users as $user2) {
+            $user[$user2->id] = $user2->name;
+        }
+        // return the view and pass in the var we previously created
+        return view('post.coba')->withTask($task)->withUser($user);
+     }
 }

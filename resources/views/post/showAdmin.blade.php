@@ -36,10 +36,10 @@
 						                		</div>
 						                		<div class="pull-right">
 							                		{{ csrf_field() }}
-							                		<button type="submit" data-id="@foreach ($task->user as $all){{ $all->name }}, @endforeach" data-toggle="modal" data-target="#lihat" class="btn btn-xs btn-success" >Lihat Detail</button>&nbsp;
+							                		<button type="button" data-id="@foreach ($task->user as $all){{ $all->name }}, @endforeach" data-project="{{$task->post->title}}" data-judul="{{$task->judul_task}}" data-deadline="{{$task->deadline}}" data-isi="{{$task->isi_task}}" data-toggle="modal" data-target="#lihat" class="btn btn-xs btn-success" >Lihat Detail</button>&nbsp;
 							                	</div>
 							                </div>
-							                	
+							                
 							               
 							            </div>
 							                
@@ -48,6 +48,7 @@
 			            			@else
 	           						@endif
 	            			@endforeach
+	            		<center>{!! $tasks->render() !!}</center>
 		    		</div>
 				</div>
 			</div>
@@ -204,7 +205,7 @@
 					    <span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body" >	      
+				<div class="modal-body" style="background-color: #eee;">	      
 					<div class="panel-body" >
 						@if($tasks->isEmpty())
 
@@ -214,27 +215,27 @@
 							<tr>
 								<td width="100">Nama Project</td>
 								<td width="15"> : </td>
-								<td>{{$task->post->title}}</td>
+								<td><input type="text" class="form-control" style="border-style: none;" name="project" id="project" readonly=""></td>
 							</tr>							
 							<tr> 
 								<td width="100">Nama Task</td>
 								<td width="15"> :</td>
-								<td>{{$task->judul_task}}</td>
+								<td><input type="text" class="form-control" style="border-style: none;" name="judul" id="judul" value="" readonly=""></td>
 							</tr>
 							<tr>
 								<td width="100">Dikerjakan</td>
 								<td width="15"> :</td>
-								<td><input type="text" style="border-style: none;" name="id" id="id" value="" readonly="">
+								<td><input type="text" class="form-control" style="border-style: none;" name="id" id="id" value="" readonly="">
 								</td>
 							</tr>
 							<tr>
 								<td width="100">Deadline</td>
 								<td width="15"> :</td>
-	                			<td>{{$task->deadline}}</td>
+	                			<td><input type="text" class="form-control" style="border-style: none;" name="deadline" id="deadline" value="" readonly=""></td>
 							</tr>
 								<td width="100">Keterangan</td>	
 								<td width="15"> :</td>							
-								<td>{{$task->isi_task}}</td>
+								<td><input type="text" class="form-control" style="border-style: none;" name="isi" id="isi" value="" readonly=""></td>
 							</tr>
 						</table>
 						</center>

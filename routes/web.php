@@ -85,6 +85,7 @@ Route::group(['prefix'=>'user'], function(){
 	Route::post('/update',"PostController@updateproUser")->name('update.user')->middleware('auth');
 
 	//notification
+	Route::get('/notif','PostController@notifuser')->name('post.notifuser')->middleware('auth');
 	
 	//portofolio
 	Route::get('/portfolio','PostController@portfolio')->name('post.portfolio')->middleware('auth');
@@ -127,4 +128,4 @@ Route::group(['prefix'=>'user'], function(){
 
 	Route::get('/taskshow','PostController@showtask')->name('post.showtask')->middleware('auth');
 
-	Route::get('/tes/{id}','PostController@coba')->name('coba');
+	Route::get('/tes/{id}','PostController@editTask')->name('coba');
