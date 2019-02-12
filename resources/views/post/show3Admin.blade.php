@@ -6,18 +6,19 @@
 			<div class="col-md-8 col-md-offset-2">
 				<div class="panel panel-default">
 		                <div class="panel-heading">
-			                Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ $post->name }}
+			                Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ $skpd->name }}
+
 			                <div class="pull-right">
-		                			<button type="button" class="btn btn-xs btn-info" data-id="{{$post->id}}" data-name="{{$post->name}}" data-email="{{$post->email}}" data-toggle="modal" data-target="#edit">&nbsp;&nbsp;Edit&nbsp;&nbsp;</button>	
+		                			<button type="button" class="btn btn-xs btn-info" data-id="{{$skpd->id}}" data-name="{{$skpd->name}}" data-email="{{$skpd->email}}" data-toggle="modal" data-target="#editskpd">&nbsp;&nbsp;Edit&nbsp;&nbsp;</button>	
 		                	</div>
 		                	<div class="pull-right">
-		                			<button type="submit" class="btn btn-xs btn-danger" data-id="{{$post->id}}" data-toggle="modal" data-target="#hapus">Hapus</button> &nbsp;
+		                			<button type="submit" class="btn btn-xs btn-danger" data-id="{{$skpd->id}}" data-toggle="modal" data-target="#hapusskpd">Hapus</button> &nbsp;
 		                	</div>	
 		                </div>
 		                <div class="panel-body">
-		                	<p>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $post->email }}</p>
-		                	<p>Bergabung sejak : {{ $post->created_at->diffForHumans() }}</p>
-		                	<p>Status: {{ $post->status }}</p>
+		                	<p>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $skpd->email }}</p>
+		                	<p>Bergabung sejak : {{ $skpd->created_at->diffForHumans() }}</p>
+		                	<p>Status: {{ $skpd->status }}</p>
 		                </div>
 		            
 	            </div>
@@ -25,18 +26,18 @@
 		</div>
 	</div>
 
-<!-- Modal Edit  -->
-	<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<!-- Modal Edit  -->
+	<div class="modal fade" id="editskpd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel">Edit Member</h4>
+					<h4 class="modal-title" id="myModalLabel">Edit SKPD</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					    <span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<form role="form" action="{{route('update.member.admin')}}" enctype="multipart/form-data" method="post">{{csrf_field()}}
+					<form role="form" action="{{route('update.membersk.admin')}}" enctype="multipart/form-data" method="post">{{csrf_field()}}
 						<div class="box-body">
 							<div class="form-group">
 								<input type="hidden" name="id" id="id" class="form-control" value="">
@@ -63,20 +64,20 @@
 	</div>
 
 <!-- Modal Hapus  -->
-	<div class="modal fade" id="hapus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" id="hapusskpd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel">Hapus Member</h4>
+					<h4 class="modal-title" id="myModalLabel">Hapus SKPD</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					    <span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">	      
 					<div class="panel-body">
-						<form action="{{route('destroy.member.admin')}}" enctype="multipart/form-data" method="post">
+						<form action="{{route('destroy.membersk.admin')}}" enctype="multipart/form-data" method="post">
 							{{csrf_field()}}
-							<p>Hapus Member ?</p>
+							<p>Hapus SKPD ?</p>
 							<input type="hidden" name="id" id="id" value="">
 							<button type="submit" class="btn btn-info pull-right" data-dismiss="modal" style="margin-left:6px;">Batalkan</button>
 							<button type="submit" class="btn btn-danger pull-right">Hapus</button>

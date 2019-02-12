@@ -19,7 +19,7 @@
 									<br>
 			        				<div class="col-md-10 col-md-offset-1">
 
-						            	<sup></sup>
+						            	<sup>{{ $task->created_at->diffForHumans() }}</sup>
 						            	<div class="panel panel-default">
 							                <div class="panel-heading" style="background: #E5E5E5;">
 							                	<STRONG>{{ $task->judul_task }}</STRONG>

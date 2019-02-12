@@ -65,6 +65,16 @@ return [
             'driver' => 'token',
             'provider' => 'skpds',
         ],
+
+        'kepala' => [
+            'driver' => 'session',
+            'provider' => 'kepalas',
+        ],
+
+        'api-kepala' => [
+            'driver' => 'token',
+            'provider' => 'kepalas',
+        ],
     ],
 
     /*
@@ -100,6 +110,10 @@ return [
             'model' => App\Skpd::class,
         ],
 
+        'kepalas' => [
+            'driver' => 'eloquent',
+            'model' => App\Kepala::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -136,6 +150,12 @@ return [
 
         'skpds' => [
             'provider' => 'skpds',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+
+        'kepalas' => [
+            'provider' => 'kepalas',
             'table' => 'password_resets',
             'expire' => 60,
         ],

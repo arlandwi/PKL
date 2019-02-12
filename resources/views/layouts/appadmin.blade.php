@@ -62,7 +62,7 @@
                             <li><a href="{{ route('admin.home') }}">Home</a></li>
                             <li><a href="{{route('post.index.admin')}}">Project</a></li>
                             <li><a href="{{ route('post.notification.admin')}}">Notification</a></li>
-                            <li><a href="{{ route('post.member.admin') }}">Member</a></li>
+                            <li><a href="{{ route('post.member.admin') }}">List Akun</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -215,12 +215,67 @@
             modal.find('.modal-body #status').val(status);    
             modal.find('.modal-body #status1').val("Selesai");  
           }
-              
-            
-          
-          
         })
 
+//modal edit member
+        $('#edit').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var id = button.data('id')
+          var name = button.data('name')
+          var email = button.data('email')
+          var modal = $(this)
+          modal.find('.modal-body #id').val(id);
+          modal.find('.modal-body #name').val(name);
+          modal.find('.modal-body #email').val(email);
+        })
+
+//modal hapus member
+        $('#hapus').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var id = button.data('id')
+          var modal = $(this)
+          modal.find('.modal-body #id').val(id);
+        })
+
+//modal edit skpd
+        $('#editskpd').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var id = button.data('id')
+          var name = button.data('name')
+          var email = button.data('email')
+          var modal = $(this)
+          modal.find('.modal-body #id').val(id);
+          modal.find('.modal-body #name').val(name);
+          modal.find('.modal-body #email').val(email);
+        })
+
+//modal hapus skpd
+        $('#hapusskpd').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var id = button.data('id')
+          var modal = $(this)
+          modal.find('.modal-body #id').val(id);
+        })
+
+//modal edit kepala
+        $('#editkepala').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var id = button.data('id')
+          var name = button.data('name')
+          var email = button.data('email')
+          var modal = $(this)
+          modal.find('.modal-body #id').val(id);
+          modal.find('.modal-body #name').val(name);
+          modal.find('.modal-body #email').val(email);
+        })
+
+//modal hapus kepala
+        $('#hapuskepala').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var id = button.data('id')
+          var modal = $(this)
+          modal.find('.modal-body #id').val(id);
+        })
     </script>
 </body>
 </html>

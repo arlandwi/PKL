@@ -8,20 +8,22 @@ use App\Category;
 use App\User;
 use App\Task;
 use App\Pengaduan;
+use App\Skpd;
+use App\kepala;
 use DB;
 use Calendar;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    
+
 	public function indexAdmin(Request $request)
 	{
         $categories = Category::all();
 
         if ($request->input('filter') === null) {
             $posts = Post::all();
-            $fill = "";          
+            $fill = "";
         }
         elseif ($request->input('filter') === 'Terbaru') {
             $posts = Post::orderBy('created_at', 'DESC')->get();
@@ -33,6 +35,25 @@ class PostController extends Controller
 
 		return view('post.indexAdmin', compact('posts','categories','fill'));
 	}
+
+    public function indexKepala(Request $request)
+    {
+        $categories = Category::all();
+
+        if ($request->input('filter') === null) {
+            $posts = Post::all();
+            $fill = "";
+        }
+        elseif ($request->input('filter') === 'Terbaru') {
+            $posts = Post::orderBy('created_at', 'DESC')->get();
+            $fill = "Sort By Terbaru";
+        }elseif ($request->input('filter') === 'Terlama') {
+            $posts = Post::orderBy('created_at', 'ASC')->get();
+            $fill = "Sort By Terlama";
+        }
+
+        return view('post.indexKepala', compact('posts','categories','fill'));
+    }
 
     public function indexUser()
     {
@@ -56,15 +77,15 @@ class PostController extends Controller
                 new \DateTime($event->tgl_mulai),
                 new \DateTime($event->deadline.' +1 day')
             );
-        } 
-        $calendar_details = Calendar::addEvents($event_list); 
- 
+        }
+        $calendar_details = Calendar::addEvents($event_list);
+
         return view('post.calendar', compact('calendar_details') );
     }
 	public function notificationAdmin(Request $request){
         if ($request->input('filter') === null) {
             $pengaduan = Pengaduan::all();
-            $fill = "";          
+            $fill = "";
         }
         elseif ($request->input('filter') === 'Terbaru') {
             $pengaduan = Pengaduan::orderBy('created_at', 'DESC')->get();
@@ -84,7 +105,7 @@ class PostController extends Controller
         }
         return view('post.notification', compact('pengaduan','fill'));
 	}
-    
+
 
     public function notificationSkpd(){
         $pengaduan = Pengaduan::orderBy('created_at', 'DESC')->get();
@@ -94,8 +115,9 @@ class PostController extends Controller
 
     public function memberAdmin(){
         $posts = User::latest()->paginate(3);
-
-        return view('post.memberAdmin', compact('posts'));
+        $skpds = Skpd::latest()->paginate(3);
+        $kepalas = Kepala::latest()->paginate(3);
+        return view('post.memberAdmin', compact('posts','skpds','kepalas'));
     }
 	public function portfolio(){
 		$posts = Post::latest()->paginate(3);
@@ -106,9 +128,19 @@ class PostController extends Controller
         return view('post.profilAdmin', compact('ulog'));
     }
 
+     public function profilSkpd(){
+        $ulog = Auth::user();
+        return view('post.profilSkpd', compact('ulog'));
+    }
+
     public function profilUser(){
         $ulog = Auth::user();
         return view('post.profilUser', compact('ulog'));
+    }
+
+    public function profilKepala(){
+        $ulog = Auth::user();
+        return view('post.profilKepala', compact('ulog'));
     }
 
     public function updateproAdmin(Request $request){
@@ -117,6 +149,14 @@ class PostController extends Controller
       $updatee->update(['email' => $request->input('email')]);
       return back()->with('success', 'Profil Berhasil Diubah');
     }
+
+    public function updatememAdmin(Request $request){
+      $updatee = \DB::table('users')->select('id')->where('id', $request->input('id'));
+      $updatee->update(['name' => $request->input('name')]);
+      $updatee->update(['email' => $request->input('email')]);
+      return back()->with('success', 'Data Member Berhasil Diedit');
+    }
+
 
      public function updateproUser(Request $request){
       $updatee = \DB::table('admins')->select('id')->where('id', $request->input('id'));
@@ -232,6 +272,16 @@ class PostController extends Controller
         return view('post.show2Admin', compact('post'));
     }
 
+    public function show3Admin(Skpd $skpd)
+    {
+        return view('post.show3Admin', compact('skpd'));
+    }
+
+    public function show4Admin(Kepala $kepala)
+    {
+        return view('post.show4Admin', compact('kepala'));
+    }
+
     public function taskAdmin(Post $post)
     {
         $users = User::all();
@@ -318,7 +368,7 @@ class PostController extends Controller
         $destroy = DB::table('tasks')->select('id')->where('id', $request->input('id'));
         $destroy->delete();
 
-        return redirect()->back()->with('success', 'Project Berhasil Dihapus'); 
+        return redirect()->back()->with('success', 'Project Berhasil Dihapus');
     }
 
      public function destroyProjectAdmin(Request $request)
@@ -326,12 +376,12 @@ class PostController extends Controller
         $destroy = DB::table('posts')->select('id')->where('id', $request->input('id'));
         $destroy->delete();
 
-        return redirect()->back()->with('success', 'Project Berhasil Dihapus'); 
+        return redirect()->back()->with('success', 'Project Berhasil Dihapus');
     }
 
      public function createProjectAdmin(Request $request)
     {
-       
+
         Post::create([
             'title' => request('title'),
             'slug' => str_slug(request('title')),
@@ -348,14 +398,22 @@ class PostController extends Controller
         $destroy = DB::table('pengaduans')->select('id')->where('id', $request->input('id'));
         $destroy->delete();
 
-        return redirect()->back()->with('success', 'Notifikasi Berhasil Dihapus'); 
+        return redirect()->back()->with('success', 'Notifikasi Berhasil Dihapus');
+    }
+
+    public function destroymemAdmin(Request $request)
+    {
+        $destroy = DB::table('users')->select('id')->where('id', $request->input('id'));
+        $destroy->delete();
+
+        return redirect()->back()->with('success', 'Member Berhasil Dihapus');
     }
 
     public function updateStatusAdmin(Request $request){
       $updatee = \DB::table('pengaduans')->select('id')->where('id', $request->input('id'));
       $updatee->update(['status' => $request->input('status1')]);
       return back()->with('success', 'Status Berhasi Di Ubah');
-     } 
+     }
 
      public function notifuser()
      {
@@ -375,4 +433,36 @@ class PostController extends Controller
         // return the view and pass in the var we previously created
         return view('post.coba')->withTask($task)->withUser($user);
      }
+
+      public function destroyskpdAdmin(Request $request)
+    {
+        $destroy = DB::table('skpds')->select('id')->where('id', $request->input('id'));
+        $destroy->delete();
+
+        return redirect()->back()->with('success', 'SKPD Berhasil Dihapus');
+    }
+
+    public function updateskpdAdmin(Request $request){
+      $updatee = \DB::table('skpds')->select('id')->where('id', $request->input('id'));
+       $updatee->update(['name' => $request->input('name')]);
+      $updatee->update(['email' => $request->input('email')]);
+      return back()->with('success', 'SKPD Berhasi Di Edit');
+     }
+
+      public function destroykepalaAdmin(Request $request)
+    {
+        $destroy = DB::table('kepalas')->select('id')->where('id', $request->input('id'));
+        $destroy->delete();
+
+        return redirect()->back()->with('success', 'Kepala Berhasil Dihapus');
+    }
+
+    public function updatekepalaAdmin(Request $request){
+      $updatee = \DB::table('kepalas')->select('id')->where('id', $request->input('id'));
+       $updatee->update(['name' => $request->input('name')]);
+      $updatee->update(['email' => $request->input('email')]);
+      return back()->with('success', 'Kepala Berhasi Di Edit');
+     }
+
+
 }

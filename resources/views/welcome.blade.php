@@ -96,6 +96,8 @@
                                         <a href="{{ route('skpd.home') }}" class="btn btn-primary btn-lg">SKPD</a>
 
                                         <a href="{{ route('home') }}" class="btn btn-success btn-lg">Member</a>
+
+                                        <a href="{{ route('kepala.home') }}" class="btn btn-warning btn-lg" style="color: white;">Kepala</a>
                                     @endauth
                             @endif
                         </p>
