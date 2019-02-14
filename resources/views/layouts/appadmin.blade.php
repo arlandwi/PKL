@@ -277,6 +277,21 @@
           var modal = $(this)
           modal.find('.modal-body #id').val(id);
         })
+
+//modal ubah status task
+        $('#ubahstatustask').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var id = button.data('id') 
+          var status = button.data('status')  
+          var modal = $(this)
+            modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #status').val(status);    
+            modal.find('.modal-body #status1').val("Validate");    
+        })
+
+       
+
+
     </script>
 </body>
 </html>

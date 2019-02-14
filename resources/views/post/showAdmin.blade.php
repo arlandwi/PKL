@@ -8,7 +8,7 @@
 					<div class="panel-heading">{{ $post->title }} | <small>{{ $post->category->name }}</small>
 						<div class="pull-right">
 	                			{{ csrf_field() }}
-	                			<button type="button" class="btn btn-xs btn-info" data-toggle="modal" data-id="{{$post->id}}" data-target="#TaskModal" >&nbsp;Add Task&nbsp;</button>	
+	                			<button type="button" class="btn btn-xs btn-info" data-toggle="modal" data-id="{{$post->id}}" data-target="#TaskModal" >&nbsp;Add Task&nbsp;</button>
 	                	</div>
 
 					</div>
@@ -38,12 +38,25 @@
 							                		{{ csrf_field() }}
 							                		<button type="button" data-id="@foreach ($task->user as $all){{ $all->name }}, @endforeach" data-project="{{$task->post->title}}" data-judul="{{$task->judul_task}}" data-deadline="{{$task->deadline}}" data-isi="{{$task->isi_task}}" data-toggle="modal" data-target="#lihat" class="btn btn-xs btn-success" >Lihat Detail</button>&nbsp;
 							                	</div>
+							                	<div class="pull-right">
+							                		{{ csrf_field() }}
+							                		@if ($task->status === 'Belum Dikerjakan')
+							                			<button type="button" class="btn btn-xs btn-danger" disabled="" >{{$task->status}}
+							                			</button>&nbsp;
+							                		@elseif ($task->status === 'Sedang Dikerjakan')
+							                			<button type="button" class="btn btn-xs btn-warning" disabled="">{{$task->status}}</button>&nbsp;
+							                		@elseif ($task->status === 'Selesai')
+							                			<button type="button" class="btn btn-xs btn-success" data-id="{{$task->id}}" data-status="{{$task->status}}" data-toggle="modal" data-target="#ubahstatustask">{{$task->status}}</button>&nbsp;
+							                		@else
+							                			<button type="button" class="btn btn-xs btn-success" disabled="">{{$task->status}}</button>&nbsp;
+							                		@endif
+							                	</div>
 							                </div>
-							                
-							               
+
+
 							            </div>
-							                
-						                	
+
+
 			            			</div>
 			            		@else
 	           					@endif
@@ -55,7 +68,7 @@
 			<div class="col-xs-8 col-xs-offset-2">
 				<div class="panel panel-default">
 					<div class="panel-heading">Komentar</div>
-					
+
 					@foreach ($post->comments()->get() as $comment)
 						<div class="panel-body" style="max-height: 100%; height: 100%;" >
 							@if($comment->user === null)
@@ -105,7 +118,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					      
+
 	<!--Form Dalam Modal -->
 					<form role="form" action="{{route('post.taskstore.admin')}}" enctype="multipart/form-data" method="post">{{csrf_field()}}
 						<div class="box-body">
@@ -113,7 +126,7 @@
 								<input type="hidden" name="post_id" id="post_id" class="form-control" value="{{$post->id}}">
 							</div>
 							<div class="form-group">
-								<input type="hidden" name="status" id="status" value="Belum Dikerjakan">
+								<input type="hidden" name="status" id="status" class="form-control" value="Belum Dikerjakan">
 							</div>
 							<div class="form-group">
 								<label for="input_judul">Judul Task</label>
@@ -134,11 +147,11 @@
 										<option value='{{ $user->id }}'>{{ $user->name }}</option>
 									@endforeach
 								</select>
-							</div>	
+							</div>
 							<div class="form-group">
 								<label for="input_isitask">Isi Task</label>
 								<textarea name="isi_task" id="isi_task" rows="5" class="form-control" placeholder="Tulis Isi Task"></textarea>
-							</div>	
+							</div>
 							<div class="box-footer">
 								<button type="submit" class="btn btn-primary">Save</button>
 							</div>
@@ -179,11 +192,11 @@
 							<div class="form-group">
 								<label for="input_deadline">Batas Pengerjaan</label>
 								<input type="date" name="deadline" id="deadline" class="form-control">
-							</div>	
+							</div>
 							<div class="form-group">
 								<label for="input_isitask">Isi Task</label>
 								<textarea name="isi" id="isi" rows="5" class="form-control" placeholder="Tulis Isi Task"></textarea>
-							</div>	
+							</div>
 							<div class="box-footer">
 								<button type="submit" class="btn btn-primary">Save</button>
 							</div>
@@ -208,7 +221,7 @@
 					    <span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body" style="background-color: #eee;">	      
+				<div class="modal-body" style="background-color: #eee;">
 					<div class="panel-body" >
 						@if($tasks->isEmpty())
 
@@ -219,8 +232,8 @@
 								<td width="100">Nama Project</td>
 								<td width="15"> : </td>
 								<td><input type="text" class="form-control" style="border-style: none;" name="project" id="project" readonly=""></td>
-							</tr>							
-							<tr> 
+							</tr>
+							<tr>
 								<td width="100">Nama Task</td>
 								<td width="15"> :</td>
 								<td><input type="text" class="form-control" style="border-style: none;" name="judul" id="judul" value="" readonly=""></td>
@@ -236,8 +249,8 @@
 								<td width="15"> :</td>
 	                			<td><input type="text" class="form-control" style="border-style: none;" name="deadline" id="deadline" value="" readonly=""></td>
 							</tr>
-								<td width="100">Keterangan</td>	
-								<td width="15"> :</td>							
+								<td width="100">Keterangan</td>
+								<td width="15"> :</td>
 								<td><input type="text" class="form-control" style="border-style: none;" name="isi" id="isi" value="" readonly=""></td>
 							</tr>
 						</table>
@@ -265,7 +278,7 @@
 					</button>
 				</div>
 
-				<div class="modal-body">	      
+				<div class="modal-body">
 					<div class="panel-body">
 						<form action="{{route('post.comment.destroy.admin')}}" enctype="multipart/form-data" method="post">
 							{{csrf_field()}}
@@ -278,7 +291,7 @@
 				</div>
 			</div>
 		</div>
-	</div>		
+	</div>
 
 	<!-- Modal Hapus Task -->
 	<div class="modal fade" id="hapustask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -291,7 +304,7 @@
 					</button>
 				</div>
 
-				<div class="modal-body">	      
+				<div class="modal-body">
 					<div class="panel-body">
 						<form action="{{route('post.destroytask.admin')}}" enctype="multipart/form-data" method="post">
 							{{csrf_field()}}
@@ -301,11 +314,41 @@
 							<button type="submit" class="btn btn-danger pull-right">Hapus</button>
 						</form>
 					</div>
-				</div>			
-			
+				</div>
+
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal Ubah Status Task -->
+	<div class="modal fade" id="ubahstatustask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Ubah Status Task</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					    <span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+					<div class="panel-body">
+						<form action="{{route('post.status.update.task')}}" enctype="multipart/form-data" method="post">
+							{{csrf_field()}}
+							<input type="hidden" name="id" id="id" value="">
+							<p>Status Pengerjaan Task <input style="text-align: center; border-style: none;" type="text" id="status" value="" disabled></p>
+							<input type="hidden" name="status1" id="status1" value="">
+							<button type="submit" class="btn btn-info pull-right" data-dismiss="modal" style="margin-left:6px;">Batalkan</button>
+							<button type="submit" class="btn btn-danger pull-right">Ubah</button>
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
 
 	<!-- footer -->
     <footer>
@@ -319,6 +362,6 @@
     </footer>
 
 
-      
+
     <!-- Akhir footer -->
 @endsection
