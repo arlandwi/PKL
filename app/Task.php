@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    protected $fillable = [ 'post_id', 'tgl_mulai', 'deadline', 'judul_task', 'isi_task', 'slug'];
+    protected $fillable = [ 'post_id', 'tgl_mulai', 'deadline', 'judul_task', 'isi_task', 'slug', 'status'];
 
     public function post()
     {
@@ -15,6 +15,6 @@ class Task extends Model
 
     public function user()
     {
-    	return $this->belongsToMany('App\User','task_user','user_id');
+    	return $this->belongsToMany('App\User','task_user');
     }
 }

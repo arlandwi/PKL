@@ -26,19 +26,18 @@ class PostCommentController extends Controller
     	return redirect()->back();
     }
 
-    public function storeUser(Request $request, Post $post)
+    public function storeUser(Request $request)
     {
         //Comment::create([
         //  'post_id' => $post->id,
         //  'user_id' => auth()->id(),
         //  'message' => $request->message,
         //]);
-        $post->comments()->create(array_merge(
-            $request->only('message'),
-            ['user_id' => auth('web')->id()]
-
-        ));
-
+        Comment::create([
+            'user_id' => auth('web')->id(),
+            'post_id' => request('post_id'),
+            'message' => request('message'),
+        ]);
         return redirect()->back();
     }
 

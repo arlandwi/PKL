@@ -58,7 +58,8 @@ class PostController extends Controller
     public function indexUser()
     {
         $posts = Post::latest()->paginate(3);
-        return view('post.indexUser', compact('posts','calendar_details'));
+        $tasks = Task::latest()->paginate(3);
+        return view('post.indexUser', compact('posts','calendar_details','tasks'));
     }
 
     public function showtask()
@@ -120,8 +121,8 @@ class PostController extends Controller
         return view('post.memberAdmin', compact('posts','skpds','kepalas'));
     }
 	public function portfolio(){
-		$posts = Post::latest()->paginate(3);
-		return view('post.portfolio', compact('posts'));
+		$tasks = Task::latest()->paginate(3);
+		return view('post.portfolio', compact('tasks'));
 	}
     public function profilAdmin(){
         $ulog = Auth::user();
@@ -227,6 +228,7 @@ class PostController extends Controller
             'judul_task' => 'required',
             'isi_task' => 'required|min:10',
             'tgl_mulai' => 'required',
+            'status' => 'required',
             'deadline' => 'required'
         ));
 
@@ -247,6 +249,7 @@ class PostController extends Controller
         $task->deadline = $request->deadline;
         $task->slug = str_slug($request->judul_task);
         $task->isi_task = $request->isi_task;
+        $task->status = $request->status;
 
         $task->save();
 
@@ -257,7 +260,7 @@ class PostController extends Controller
 
     public function showAdmin(Post $post)
     {
-        $tasks = Task::latest()->paginate(3);
+        $tasks = Task::latest()->paginate(4);
         $users = User::All();
     	return view('post.showAdmin', compact('post', 'tasks', 'users'));
     }
@@ -415,11 +418,26 @@ class PostController extends Controller
       return back()->with('success', 'Status Berhasi Di Ubah');
      }
 
+     public function updateStatusTask(Request $request){
+      $updatee = \DB::table('tasks')->select('id')->where('id', $request->input('id'));
+      $updatee->update(['status' => $request->input('status1')]);
+      return back()->with('success', 'Status Berhasi Di Ubah');
+     }
+
      public function notifuser()
      {
-        $users = User::All()->where('id', Auth::user()->id);
-        return view('post.notificationUser', compact('users'));
+        $posts = Post::latest()->paginate(3);
+        $tasks = Task::latest()->paginate(3);
+        return view('post.notificationUser', compact('posts','calendar_details','tasks'));
      }
+
+    public function notiftask(Task $task)
+    {
+        $users = User::All();
+        $tasks = Task::All();
+        $post = Task::All();
+        return view('post.lihatdetail', compact('tasks','task', 'users','post'));
+    }
 
      public function editTask($id)
      {

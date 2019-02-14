@@ -74,6 +74,8 @@ Route::group(['prefix'=>'admin'], function(){
 	Route::post('/post/adduserntask','PostController@addUserAdmin')->name('post.tasknuser.admin')->middleware('auth:admin');
 	Route::post('/post/destroy','PostController@destroyTaskAdmin')->name('post.destroytask.admin')->middleware('auth:admin');
 	Route::post('/post/edit','PostController@updateTaskAdmin')->name('post.updatetask.admin')->middleware('auth:admin');
+	Route::post('/post/update','PostController@updateStatusTask')->name('post.status.update.task')->middleware('auth:admin');
+
 
 	//notification
 	Route::get('/notification','PostController@notificationAdmin')->name('post.notification.admin')->middleware('auth:admin');
@@ -98,6 +100,8 @@ Route::group(['prefix'=>'user'], function(){
 
 	//notification
 	Route::get('/notif','PostController@notifuser')->name('post.notifuser')->middleware('auth');
+	Route::post('/notif/update','PostController@updateStatusTask')->name('post.status.update.taskuser')->middleware('auth');
+	Route::get('/notif/{task}','PostController@notiftask')->name('post.task.user')->middleware('auth');
 	
 	//portofolio
 	Route::get('/portfolio','PostController@portfolio')->name('post.portfolio')->middleware('auth');
@@ -107,7 +111,8 @@ Route::group(['prefix'=>'user'], function(){
 	Route::get('/post/{post}','PostController@showUser')->name('post.show.user')->middleware('auth');
 
 	//create comment
-	Route::post('/post/{post}/comment','PostCommentController@storeUser')->name('post.comment.store.user')->middleware('auth');
+	// Route::post('/post/{post}/comment','PostCommentController@storeUser')->name('post.comment.store.user')->middleware('auth');
+	Route::post('/task/comment','PostCommentController@storeUser')->name('post.comment.store.user')->middleware('auth');
 
 	//calendar
 	Route::get('/calendar','PostController@calendar')->name('post.calendar')->middleware('auth');

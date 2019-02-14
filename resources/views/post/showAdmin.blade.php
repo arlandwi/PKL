@@ -38,6 +38,19 @@
 							                		{{ csrf_field() }}
 							                		<button type="button" data-id="@foreach ($task->user as $all){{ $all->name }}, @endforeach" data-project="{{$task->post->title}}" data-judul="{{$task->judul_task}}" data-deadline="{{$task->deadline}}" data-isi="{{$task->isi_task}}" data-toggle="modal" data-target="#lihat" class="btn btn-xs btn-success" >Lihat Detail</button>&nbsp;
 							                	</div>
+							                	<div class="pull-right">
+							                		{{ csrf_field() }}
+							                		@if ($task->status === 'Belum Dikerjakan')
+							                			<button type="button" class="btn btn-xs btn-danger" disabled="" >{{$task->status}}
+							                			</button>&nbsp;
+							                		@elseif ($task->status === 'Sedang Dikerjakan')
+							                			<button type="button" class="btn btn-xs btn-warning" disabled="">{{$task->status}}</button>&nbsp;
+							                		@elseif ($task->status === 'Selesai')
+							                			<button type="button" class="btn btn-xs btn-success" data-id="{{$task->id}}" data-status="{{$task->status}}" data-toggle="modal" data-target="#ubahstatustask">{{$task->status}}</button>&nbsp;
+							                		@else
+							                			<button type="button" class="btn btn-xs btn-success" disabled="">{{$task->status}}</button>&nbsp;
+							                		@endif
+							                	</div>
 							                </div>
 							                
 							               
@@ -111,6 +124,9 @@
 						<div class="box-body">
 							<div class="form-group">
 								<input type="hidden" name="post_id" id="post_id" class="form-control" value="{{$post->id}}">
+							</div>
+							<div class="form-group">
+								<input type="hidden" name="status" id="status" class="form-control" value="Belum Dikerjakan">
 							</div>
 							<div class="form-group">
 								<label for="input_judul">Judul Task</label>
@@ -303,6 +319,36 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal Ubah Status Task -->
+	<div class="modal fade" id="ubahstatustask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Ubah Status Task</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					    <span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body">	      
+					<div class="panel-body">
+						<form action="{{route('post.status.update.task')}}" enctype="multipart/form-data" method="post">
+							{{csrf_field()}}
+							<input type="hidden" name="id" id="id" value="">
+							<p>Status Pengerjaan Task <input style="text-align: center; border-style: none;" type="text" id="status" value="" disabled></p>
+							<input type="hidden" name="status1" id="status1" value="">
+							<button type="submit" class="btn btn-info pull-right" data-dismiss="modal" style="margin-left:6px;">Batalkan</button>
+							<button type="submit" class="btn btn-danger pull-right">Ubah</button>
+						</form>
+					</div>
+				</div>			
+			
+			</div>
+		</div>
+	</div>
+
+
 
 	<!-- footer -->
     <footer>

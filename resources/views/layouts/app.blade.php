@@ -19,7 +19,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js" integrity="sha384-vhJnz1OVIdLktyixHY4Uk3OHEwdQqPppqYR8+5mjsauETgLOcEynD9oPHhhz18Nw" crossorigin="anonymous">
     </script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css">
 
 </head>
 
@@ -59,19 +59,7 @@
 
                         @else
                             <li><a href="{{ route('home') }}">Home</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>Project<span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{route('post.index.user')}}">All Project</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{route('post.calendar')}}">Calendar</a>
-                                    </li>
-                                </ul>
-                            </li>
+                             <li><a href="{{route('post.calendar')}}">Calendar</a></li>
                             <li><a href="{{route('post.notifuser')}}">Notification</a></li>
                             <li><a href="{{route('post.portfolio')}}">Portfolio</a></li>
                             <li class="dropdown">
@@ -108,12 +96,9 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 
-     <!-- Scripts -->
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
+    
 
-    <script>
+     <script>
         $('#myModal').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget)
           var id = button.data('id') 
@@ -124,6 +109,45 @@
           modal.find('.modal-body #name').val(name);
           modal.find('.modal-body #email').val(email);
         })
+
+        $('#lihatuser').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var id = button.data('id') 
+          var project = button.data('project') 
+          var judul = button.data('judul')
+          var deadline = button.data('deadline')
+          var isi = button.data('isi') 
+          var modal = $(this)
+          modal.find('.modal-body #project').val(project);
+          modal.find('.modal-body #judul').val(judul);
+          modal.find('.modal-body #id').val(id);
+          modal.find('.modal-body #deadline').val(deadline);
+          modal.find('.modal-body #isi').val(isi);
+        })
+
+        //modal ubah status
+        $('#ubahstatustask').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget)
+          var id = button.data('id') 
+          var status = button.data('status')  
+          var modal = $(this)
+          if (status === "Belum Dikerjakan") {
+            modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #status').val(status);    
+            modal.find('.modal-body #status1').val("Sedang Dikerjakan");  
+          }else if (status === "Sedang Dikerjakan"){
+            modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #status').val(status);    
+            modal.find('.modal-body #status1').val("Selesai");  
+          }
+        })
+
+    </script>
+
+     <!-- Scripts -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js">
     </script>
 </body>
 </html>
