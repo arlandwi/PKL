@@ -14,8 +14,8 @@
 					</div>
 					<div class="panel-body"><p>{{ $post->content }}</p></div>
 						<div class="row">
-								@foreach ($tasks as $task)
-									@if($task->post_id === $post->id)
+							@foreach ($tasks as $task)
+								@if($task->post_id === $post->id)
 									<br>
 			        				<div class="col-md-10 col-md-offset-1">
 
@@ -45,8 +45,8 @@
 							                
 						                	
 			            			</div>
-			            			@else
-	           						@endif
+			            		@else
+	           					@endif
 	            			@endforeach
 	            		<center>{!! $tasks->render() !!}</center>
 		    		</div>
@@ -111,6 +111,9 @@
 						<div class="box-body">
 							<div class="form-group">
 								<input type="hidden" name="post_id" id="post_id" class="form-control" value="{{$post->id}}">
+							</div>
+							<div class="form-group">
+								<input type="hidden" name="status" id="status" value="Belum Dikerjakan">
 							</div>
 							<div class="form-group">
 								<label for="input_judul">Judul Task</label>

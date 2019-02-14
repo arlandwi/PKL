@@ -61,6 +61,7 @@
                         @elseif ( Auth::user()->status === 'admin' )
                             <li><a href="{{ route('admin.home') }}">Home</a></li>
                             <li><a href="{{route('post.index.admin')}}">Project</a></li>
+                            <li><a href="{{route('post.admincalendar')}}">Calendar</a></li>
                             <li><a href="{{ route('post.notification.admin')}}">Notification</a></li>
                             <li><a href="{{ route('post.member.admin') }}">List Akun</a></li>
                             <li class="dropdown">

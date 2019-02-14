@@ -59,9 +59,7 @@ Route::group(['prefix'=>'admin'], function(){
 
 	//create project
 	Route::get('/create','PostController@createproAdmin')->name('post.pro.admin')->middleware('auth:admin');
-
-	 Route::get('/createadmin','PostController@createAdmin')->name('post.create.admin')->middleware('auth:admin');
-
+	Route::get('/createadmin','PostController@createAdmin')->name('post.create.admin')->middleware('auth:admin');
 	Route::post('/post/create','PostController@storeAdmin')->name('post.store.admin')->middleware('auth:admin');
 
 	//comment
@@ -81,7 +79,8 @@ Route::group(['prefix'=>'admin'], function(){
 	Route::post('/notification/destroy','PostController@destroyNotifAdmin')->name('post.notif.destroy.admin')->middleware('auth:admin');
 	Route::post('/notification/update','PostController@updateStatusAdmin')->name('post.status.update.admin')->middleware('auth:admin');
 
-
+	//calendar
+	Route::get('/calendar','PostController@adminCalendar')->name('post.admincalendar')->middleware('auth:admin');
 
 });
 
@@ -162,10 +161,7 @@ Route::group(['prefix'=>'user'], function(){
 		Route::get('/post','PostController@indexKepala')->name('post.index.kepala')->middleware('auth:kepala');
 		Route::post('/post','PostController@indexKepala')->name('post.indexfill.kepala')->middleware('auth:kepala');	
 
-
+		//pdf
+		Route::get('/pdf/{id}', 'PdfControler@cetak')->name('cetak-pdf')->middleware('auth:kepala');
 	});
 
-
-	Route::get('/taskshow','PostController@showtask')->name('post.showtask')->middleware('auth');
-
-	Route::get('/tes/{id}','PostController@editTask')->name('coba');

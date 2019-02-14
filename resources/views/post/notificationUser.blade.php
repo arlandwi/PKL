@@ -5,8 +5,11 @@
 		<center>
 			<h2>All Task</h2>
 		</center>
-		@foreach($users as $user)
-		<p>{{$user->name}}</p>
+		@foreach($task->user as $us)
+		  @if($us->id === 1)
+        <p>{{$us->slug}}</p>
+      @else
+      @endif
 		@endforeach
 	</div>
 

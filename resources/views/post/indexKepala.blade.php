@@ -27,7 +27,9 @@
 		                <div class="panel-heading">
 		                	<a href="">{{ $post->title }}</a>  | {{ $post->category->name }}
 		                	<div class="pull-right">
-		                		<button class="btn btn-xs btn-success">Cetak PDF</button>
+                        <form action="{{route('cetak-pdf', $post['id'])}}">
+		                		  <button class="btn btn-xs btn-success">Cetak PDF</button>
+                        </form>
 		                	</div>
 		                	<div class="pull-right">
 		                		{{ $post->created_at->diffForHumans() }} &nbsp;

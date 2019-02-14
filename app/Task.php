@@ -15,6 +15,6 @@ class Task extends Model
 
     public function user()
     {
-    	return $this->belongsToMany('App\User','task_user','user_id');
+    	return $this->belongsToMany('App\User','task_user');
     }
 }

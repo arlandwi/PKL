@@ -61,14 +61,8 @@ class PostController extends Controller
         return view('post.indexUser', compact('posts','calendar_details'));
     }
 
-    public function showtask()
-    {
-        $tasks = Task::latest()->paginate(3);
-
-        return view('post.showtask', compact('tasks'));
-    }
     public function calendar(){
-       $events = Task::get();
+        $events = Task::get();
         $event_list = [];
         foreach ($events as $key => $event) {
             $event_list[] = Calendar::event(
@@ -82,6 +76,23 @@ class PostController extends Controller
 
         return view('post.calendar', compact('calendar_details') );
     }
+
+    public function adminCalendar(){
+        $events = Task::get();
+        $event_list = [];
+        foreach ($events as $key => $event) {
+            $event_list[] = Calendar::event(
+                $event->judul_task,
+                true,
+                new \DateTime($event->tgl_mulai),
+                new \DateTime($event->deadline.' +1 day')
+            );
+        }
+        $calendar_details = Calendar::addEvents($event_list);
+
+        return view('post.adminCalendar', compact('calendar_details') );
+    }
+
 	public function notificationAdmin(Request $request){
         if ($request->input('filter') === null) {
             $pengaduan = Pengaduan::all();
@@ -227,17 +238,9 @@ class PostController extends Controller
             'judul_task' => 'required',
             'isi_task' => 'required|min:10',
             'tgl_mulai' => 'required',
-            'deadline' => 'required'
+            'deadline' => 'required',
+            'status' => 'required'
         ));
-
-        // Task::create([
-        //     'post_id' => request('post_id'),
-        //     'judul_task' => request('judul_task'),
-        //     'tgl_mulai' => request('tgl_mulai'),
-        //     'deadline' => request('deadline'),
-        //     'slug' => str_slug(request('judul_task')),
-        //     'isi_task' => request('isi_task')
-        // ]);
 
         $task = new Task;
 
@@ -247,6 +250,7 @@ class PostController extends Controller
         $task->deadline = $request->deadline;
         $task->slug = str_slug($request->judul_task);
         $task->isi_task = $request->isi_task;
+        $task->status = $request->status;
 
         $task->save();
 
@@ -320,12 +324,6 @@ class PostController extends Controller
         ]);
 
         return redirect()->route('post.member.admin')->with('info', 'Post Berhasil Diubah');
-    }
-
-    public function edit3(User $post)
-    {
-        $post = User::all();
-        return view('post.edit3', compact('post'));
     }
 
     public function destroyAdmin(Post $post)
@@ -417,8 +415,9 @@ class PostController extends Controller
 
      public function notifuser()
      {
-        $users = User::All()->where('id', Auth::user()->id);
-        return view('post.notificationUser', compact('users'));
+        $task = Task::All();
+        $users = User::All();
+        return view('post.notificationUser', compact('users','task'));
      }
 
      public function editTask($id)
